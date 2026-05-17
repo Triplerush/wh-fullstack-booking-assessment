@@ -1,0 +1,33 @@
+{% if lang == "en" %}Hi {{ user_name }},
+
+Your booking is confirmed.
+
+Booking code: {{ booking.code }}
+Property: {{ property_title }}
+Address: {{ property_address }}
+Check-in: {{ booking.check_in }}
+Check-out: {{ booking.check_out }}
+Nights: {{ nights }}
+Guests: {{ booking.guests }}
+Total: {{ booking.total_price }} {{ booking.currency }}
+
+We hope you enjoy your stay.
+
+— Wind Homes
+{% else %}Hola {{ user_name }},
+
+Tu reserva está confirmada.
+
+Código de reserva: {{ booking.code }}
+Propiedad: {{ property_title }}
+Dirección: {{ property_address }}
+Entrada: {{ booking.check_in }}
+Salida: {{ booking.check_out }}
+Noches: {{ nights }}
+Huéspedes: {{ booking.guests }}
+Total: {{ booking.total_price }} {{ booking.currency }}
+
+Disfruta tu estancia.
+
+— Wind Homes
+{% endif %}

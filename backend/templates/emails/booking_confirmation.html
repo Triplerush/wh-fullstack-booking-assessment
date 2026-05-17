@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="{{ lang }}">
+  <body style="font-family: Helvetica, Arial, sans-serif; color: #1a1a1a; line-height: 1.5;">
+    {% if lang == "en" %}
+      <h1 style="color:#1f3a5f">Booking confirmed</h1>
+      <p>Hi {{ user_name }},</p>
+      <p>Your booking is confirmed. Here are the details:</p>
+      <table style="border-collapse: collapse; width: 100%; max-width: 480px;">
+        <tr><td><strong>Booking code</strong></td><td>{{ booking.code }}</td></tr>
+        <tr><td><strong>Property</strong></td><td>{{ property_title }}</td></tr>
+        <tr><td><strong>Address</strong></td><td>{{ property_address }}</td></tr>
+        <tr><td><strong>Check-in</strong></td><td>{{ booking.check_in }}</td></tr>
+        <tr><td><strong>Check-out</strong></td><td>{{ booking.check_out }}</td></tr>
+        <tr><td><strong>Nights</strong></td><td>{{ nights }}</td></tr>
+        <tr><td><strong>Guests</strong></td><td>{{ booking.guests }}</td></tr>
+        <tr><td><strong>Total</strong></td><td>{{ booking.total_price }} {{ booking.currency }}</td></tr>
+      </table>
+      <p>We hope you enjoy your stay.</p>
+      <p>— Wind Homes</p>
+    {% else %}
+      <h1 style="color:#1f3a5f">Reserva confirmada</h1>
+      <p>Hola {{ user_name }},</p>
+      <p>Tu reserva está confirmada. Estos son los detalles:</p>
+      <table style="border-collapse: collapse; width: 100%; max-width: 480px;">
+        <tr><td><strong>Código de reserva</strong></td><td>{{ booking.code }}</td></tr>
+        <tr><td><strong>Propiedad</strong></td><td>{{ property_title }}</td></tr>
+        <tr><td><strong>Dirección</strong></td><td>{{ property_address }}</td></tr>
+        <tr><td><strong>Entrada</strong></td><td>{{ booking.check_in }}</td></tr>
+        <tr><td><strong>Salida</strong></td><td>{{ booking.check_out }}</td></tr>
+        <tr><td><strong>Noches</strong></td><td>{{ nights }}</td></tr>
+        <tr><td><strong>Huéspedes</strong></td><td>{{ booking.guests }}</td></tr>
+        <tr><td><strong>Total</strong></td><td>{{ booking.total_price }} {{ booking.currency }}</td></tr>
+      </table>
+      <p>Disfruta tu estancia.</p>
+      <p>— Wind Homes</p>
+    {% endif %}
+  </body>
+</html>

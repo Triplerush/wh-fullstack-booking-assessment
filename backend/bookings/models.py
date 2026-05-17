@@ -1,4 +1,3 @@
-"""Modelo de reserva (raíz del agregado bookings)."""
 from django.conf import settings
 from django.db import models
 
@@ -26,6 +25,8 @@ class Booking(models.Model):
         max_length=16, choices=BookingStatus.choices, default=BookingStatus.CONFIRMED
     )
     email_sent_at = models.DateTimeField(null=True, blank=True)
+    # Idioma vigente cuando se creó la reserva; se usa para renderizar el email.
+    language = models.CharField(max_length=2, default="es")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

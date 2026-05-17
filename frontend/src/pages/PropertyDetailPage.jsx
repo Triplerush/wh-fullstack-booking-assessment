@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import { Link, useParams } from "react-router-dom";
 
@@ -16,9 +16,13 @@ export function PropertyDetailPage() {
   const query = useQuery({
     queryKey: ["property", slug, lang],
     queryFn: () => getProperty(slug),
+    placeholderData: keepPreviousData,
   });
 
-  if (query.isLoading) return <p>{t("common.loading")}</p>;
+  // `isPending` solo es true en la primera carga; al cambiar idioma se
+  // mantiene la versión previa mientras llega la nueva, así no se desmonta
+  // la StickyBookingCard y el form conserva su estado.
+  if (query.isPending) return <p>{t("common.loading")}</p>;
   if (query.isError) {
     return (
       <div>

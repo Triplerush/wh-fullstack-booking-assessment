@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 
 import { getLocations } from "../api/catalog";
@@ -13,10 +13,12 @@ export function HomePage() {
   const locations = useQuery({
     queryKey: ["locations", lang],
     queryFn: getLocations,
+    placeholderData: keepPreviousData,
   });
   const featured = useQuery({
     queryKey: ["properties", "featured", lang],
     queryFn: () => getProperties({ featured: "true" }),
+    placeholderData: keepPreviousData,
   });
 
   const items = featured.data?.results ?? [];

@@ -57,6 +57,12 @@
     "title": "Confirm and pay",
     "noDraft": "No pending booking. Go back to the property page.",
     "paymentDetails": "Payment details",
+    "paymentLockedHint": "Create your account above to continue with the payment.",
+    "guest": {
+      "title": "Create your account to book",
+      "subtitle": "We need a few details to issue the confirmation.",
+      "submit": "Create account and continue"
+    },
     "cardNumber": "Card number",
     "cardholder": "Cardholder",
     "expiry": "Expiry",
@@ -71,7 +77,7 @@
   },
   "confirmation": {
     "title": "Booking confirmed!",
-    "intro": "We'll send the details to {{email}}.",
+    "intro": "An email with the details was sent to {{email}}.",
     "code": "Booking code",
     "status": "Status",
     "total": "Total",

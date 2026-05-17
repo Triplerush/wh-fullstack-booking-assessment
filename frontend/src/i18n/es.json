@@ -57,6 +57,12 @@
     "title": "Confirmar y pagar",
     "noDraft": "No hay reserva pendiente. Vuelve al detalle de la propiedad.",
     "paymentDetails": "Datos de pago",
+    "paymentLockedHint": "Crea tu cuenta arriba para continuar con el pago.",
+    "guest": {
+      "title": "Crea tu cuenta para reservar",
+      "subtitle": "Necesitamos algunos datos para emitir la confirmación.",
+      "submit": "Crear cuenta y continuar"
+    },
     "cardNumber": "Número de tarjeta",
     "cardholder": "Titular",
     "expiry": "Caducidad",
@@ -71,7 +77,7 @@
   },
   "confirmation": {
     "title": "¡Reserva confirmada!",
-    "intro": "Te enviaremos los detalles a {{email}}.",
+    "intro": "Se ha enviado un email con los detalles a {{email}}.",
     "code": "Código de reserva",
     "status": "Estado",
     "total": "Total",

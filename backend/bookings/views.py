@@ -1,7 +1,8 @@
-"""Vistas del agregado bookings."""
 from rest_framework import mixins, permissions, status, viewsets
 from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
+
+from common.localization import get_language_from_request
 
 from .models import Booking
 from .serializers import (
@@ -45,6 +46,7 @@ class BookingViewSet(
                 check_in=serializer.validated_data["check_in"],
                 check_out=serializer.validated_data["check_out"],
                 guests=serializer.validated_data["guests"],
+                language=get_language_from_request(request),
             )
         except ValidationError:
             raise

@@ -74,6 +74,7 @@ def create_booking(
     check_in: date,
     check_out: date,
     guests: int,
+    language: str = "es",
 ) -> Booking:
     """Crea la reserva dentro de una transacción atómica con bloqueo de filas."""
     with transaction.atomic():
@@ -107,6 +108,7 @@ def create_booking(
                         total_price=total,
                         currency=prop.currency,
                         status=BookingStatus.CONFIRMED,
+                        language=language if language in ("es", "en") else "es",
                     )
             except IntegrityError as exc:
                 if _attempt == 1:
