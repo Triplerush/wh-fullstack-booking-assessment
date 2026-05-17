@@ -4,9 +4,43 @@
   },
   "nav": {
     "login": "Iniciar sesión",
-    "register": "Registrarse"
+    "register": "Registrarse",
+    "logout": "Cerrar sesión",
+    "myBookings": "Mis reservas",
+    "greeting": "Hola, {{name}}"
   },
   "footer": {
     "tagline": "Alquileres con alma."
+  },
+  "home": {
+    "title": "Wind Homes",
+    "subtitle": "Alquileres vacacionales. Catálogo y búsqueda pronto"
+  },
+  "auth": {
+    "email": "Email",
+    "password": "Contraseña",
+    "fullName": "Nombre completo",
+    "nationality": "Nacionalidad",
+    "phoneCountry": "Prefijo",
+    "phoneNumber": "Teléfono",
+    "birthDate": "Fecha de nacimiento",
+    "submitting": "Enviando…",
+    "invalidCredentials": "Credenciales inválidas.",
+    "login": {
+      "title": "Iniciar sesión",
+      "submit": "Entrar",
+      "noAccount": "¿Aún no tienes cuenta?"
+    },
+    "register": {
+      "title": "Crear cuenta",
+      "submit": "Crear cuenta",
+      "hasAccount": "¿Ya tienes cuenta?"
+    }
+  },
+  "bookings": {
+    "mine": {
+      "title": "Mis reservas",
+      "empty": "Sin reservas aún."
+    }
   }
 }

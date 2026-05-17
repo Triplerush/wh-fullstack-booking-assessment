@@ -1,9 +1,3 @@
-"""Custom user model.
-
-Defined in iter-0 (with full fields per `decisions.md` §4) so the first
-`migrate` already targets the swapped AUTH_USER_MODEL. Iter-1 adds the
-registration/login API surface on top of this model.
-"""
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
 

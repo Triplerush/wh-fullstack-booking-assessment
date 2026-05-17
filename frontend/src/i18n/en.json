@@ -4,9 +4,43 @@
   },
   "nav": {
     "login": "Sign in",
-    "register": "Sign up"
+    "register": "Sign up",
+    "logout": "Sign out",
+    "myBookings": "My bookings",
+    "greeting": "Hi, {{name}}"
   },
   "footer": {
     "tagline": "Rentals with soul."
+  },
+  "home": {
+    "title": "Wind Homes",
+    "subtitle": "Holiday rentals. Catalog and search soon"
+  },
+  "auth": {
+    "email": "Email",
+    "password": "Password",
+    "fullName": "Full name",
+    "nationality": "Nationality",
+    "phoneCountry": "Code",
+    "phoneNumber": "Phone",
+    "birthDate": "Date of birth",
+    "submitting": "Submitting…",
+    "invalidCredentials": "Invalid credentials.",
+    "login": {
+      "title": "Sign in",
+      "submit": "Sign in",
+      "noAccount": "Don't have an account?"
+    },
+    "register": {
+      "title": "Create account",
+      "submit": "Create account",
+      "hasAccount": "Already have an account?"
+    }
+  },
+  "bookings": {
+    "mine": {
+      "title": "My bookings",
+      "empty": "No bookings yet."
+    }
   }
 }
