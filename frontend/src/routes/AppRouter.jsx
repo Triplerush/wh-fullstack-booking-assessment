@@ -3,6 +3,8 @@ import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
 
 import { AppShell } from "../components/layout/AppShell";
 import { AuthProvider } from "../context/AuthContext";
+import { BookingConfirmationPage } from "../pages/BookingConfirmationPage";
+import { CheckoutPage } from "../pages/CheckoutPage";
 import { HomePage } from "../pages/HomePage";
 import { LoginPage } from "../pages/LoginPage";
 import { MyBookingsPage } from "../pages/MyBookingsPage";
@@ -40,8 +42,10 @@ export function AppRouter() {
               <Route path="/register" element={<RegisterPage />} />
               <Route path="/search" element={<SearchPage />} />
               <Route path="/property/:slug" element={<PropertyDetailPage />} />
+              <Route path="/checkout" element={<CheckoutPage />} />
               <Route element={<RequireAuth />}>
                 <Route path="/me/bookings" element={<MyBookingsPage />} />
+                <Route path="/booking/:id/confirmation" element={<BookingConfirmationPage />} />
               </Route>
             </Route>
           </Routes>

@@ -34,6 +34,8 @@
     "night": "noche",
     "guests_one": "{{count}} huésped",
     "guests_other": "{{count}} huéspedes",
+    "nights_one": "{{count}} noche",
+    "nights_other": "{{count}} noches",
     "bedrooms": "habs.",
     "bathrooms": "baños"
   },
@@ -46,8 +48,35 @@
     "noAmenities": "Sin amenidades registradas.",
     "bookingComingSoon": "El flujo de reserva estará disponible en breve.",
     "checkAvailability": "Comprobar disponibilidad",
+    "availabilityError": "No se pudo comprobar la disponibilidad.",
+    "reserve": "Reservar",
     "notFound": "Propiedad no encontrada.",
     "backToSearch": "Volver a la búsqueda"
+  },
+  "checkout": {
+    "title": "Confirmar y pagar",
+    "noDraft": "No hay reserva pendiente. Vuelve al detalle de la propiedad.",
+    "paymentDetails": "Datos de pago",
+    "cardNumber": "Número de tarjeta",
+    "cardholder": "Titular",
+    "expiry": "Caducidad",
+    "cvv": "CVV",
+    "acceptTerms": "Acepto las condiciones y la política de privacidad.",
+    "confirmAndPay": "Confirmar y pagar",
+    "genericError": "No se pudo crear la reserva. Vuelve a intentarlo.",
+    "dates": "Fechas",
+    "nights": "Noches",
+    "guests": "Huéspedes",
+    "total": "Total"
+  },
+  "confirmation": {
+    "title": "¡Reserva confirmada!",
+    "intro": "Te enviaremos los detalles a {{email}}.",
+    "code": "Código de reserva",
+    "status": "Estado",
+    "total": "Total",
+    "goToMyBookings": "Ver mis reservas",
+    "notFound": "No encontramos esa reserva."
   },
   "auth": {
     "email": "Email",
@@ -71,6 +100,10 @@
     }
   },
   "bookings": {
-    "mine": { "title": "Mis reservas", "empty": "Sin reservas aún." }
+    "mine": {
+      "title": "Mis reservas",
+      "empty": "Sin reservas aún.",
+      "viewDetails": "Ver detalles"
+    }
   }
 }

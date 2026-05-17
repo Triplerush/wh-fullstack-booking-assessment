@@ -34,6 +34,8 @@
     "night": "night",
     "guests_one": "{{count}} guest",
     "guests_other": "{{count}} guests",
+    "nights_one": "{{count}} night",
+    "nights_other": "{{count}} nights",
     "bedrooms": "bd",
     "bathrooms": "ba"
   },
@@ -46,8 +48,35 @@
     "noAmenities": "No amenities yet.",
     "bookingComingSoon": "Booking flow lands soon.",
     "checkAvailability": "Check availability",
+    "availabilityError": "Couldn't check availability.",
+    "reserve": "Reserve",
     "notFound": "Property not found.",
     "backToSearch": "Back to search"
+  },
+  "checkout": {
+    "title": "Confirm and pay",
+    "noDraft": "No pending booking. Go back to the property page.",
+    "paymentDetails": "Payment details",
+    "cardNumber": "Card number",
+    "cardholder": "Cardholder",
+    "expiry": "Expiry",
+    "cvv": "CVV",
+    "acceptTerms": "I accept the terms and privacy policy.",
+    "confirmAndPay": "Confirm and pay",
+    "genericError": "Couldn't create the booking. Please try again.",
+    "dates": "Dates",
+    "nights": "Nights",
+    "guests": "Guests",
+    "total": "Total"
+  },
+  "confirmation": {
+    "title": "Booking confirmed!",
+    "intro": "We'll send the details to {{email}}.",
+    "code": "Booking code",
+    "status": "Status",
+    "total": "Total",
+    "goToMyBookings": "Go to my bookings",
+    "notFound": "Booking not found."
   },
   "auth": {
     "email": "Email",
@@ -71,6 +100,10 @@
     }
   },
   "bookings": {
-    "mine": { "title": "My bookings", "empty": "No bookings yet." }
+    "mine": {
+      "title": "My bookings",
+      "empty": "No bookings yet.",
+      "viewDetails": "View details"
+    }
   }
 }
