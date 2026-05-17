@@ -1,0 +1,24 @@
+# Desarrollo local: solo Postgres se ejecuta en Docker por el momento.
+# El backend (Django) se ejecuta en el host mediante `python manage.py runserver 8000`.
+# El frontend (Vite) se ejecuta en el host mediante `npm run dev` (puerto 5173).
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: wind_homes_postgres
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-wind_homes}
+      POSTGRES_USER: ${POSTGRES_USER:-wind_homes}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-wind_homes}
+    ports:
+      - "5432:5432"
+    volumes:
+      - wind_homes_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-wind_homes} -d ${POSTGRES_DB:-wind_homes}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  wind_homes_pgdata:

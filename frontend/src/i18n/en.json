@@ -1,0 +1,12 @@
+{
+  "app": {
+    "title": "Wind Homes"
+  },
+  "nav": {
+    "login": "Sign in",
+    "register": "Sign up"
+  },
+  "footer": {
+    "tagline": "Rentals with soul."
+  }
+}

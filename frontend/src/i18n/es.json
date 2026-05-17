@@ -1,0 +1,12 @@
+{
+  "app": {
+    "title": "Wind Homes"
+  },
+  "nav": {
+    "login": "Iniciar sesión",
+    "register": "Registrarse"
+  },
+  "footer": {
+    "tagline": "Alquileres con alma."
+  }
+}

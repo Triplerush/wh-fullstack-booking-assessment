@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.pytest_cache/
+
+# Virtualenv
+backend/.venv/
+.venv/
+venv/
+
+# Django
+backend/db.sqlite3
+backend/media/
+backend/staticfiles/
+backend/.env
+
+# Node
+frontend/node_modules/
+frontend/dist/
+frontend/.env
+
+# Fonts
+fonts/*.otf
+frontend/src/assets/fonts/*.otf
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+*.swp
