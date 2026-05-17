@@ -1,8 +1,8 @@
-"""Development settings.
+"""Settings de desarrollo.
 
-Re-exports every name `base` defines and overrides only the ones that differ
-in dev. Django reads attributes from the module pointed at by
-DJANGO_SETTINGS_MODULE, so each setting must live at module scope here.
+Reexporta cada nombre que define `base` y sobreescribe solo los que cambian en
+desarrollo. Django lee los atributos del módulo apuntado por
+DJANGO_SETTINGS_MODULE, así que cada setting debe vivir a nivel de módulo aquí.
 """
 from .base import (
     ASGI_APPLICATION,

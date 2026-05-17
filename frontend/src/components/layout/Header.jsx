@@ -2,6 +2,7 @@ import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
 
 import { useAuth } from "../../context/AuthContext";
+import { LanguageSwitcher } from "./LanguageSwitcher";
 
 export function Header() {
   const { t } = useTranslation();
@@ -27,7 +28,16 @@ export function Header() {
       <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
         <h1 style={{ fontSize: "1.5rem" }}>{t("app.title")}</h1>
       </Link>
-      <nav style={{ display: "flex", gap: "var(--space-4)", alignItems: "center" }}>
+      <nav
+        style={{
+          display: "flex",
+          gap: "var(--space-4)",
+          alignItems: "center",
+          flexWrap: "wrap",
+        }}
+      >
+        <Link to="/search">{t("nav.search")}</Link>
+        <LanguageSwitcher />
         {isLoading ? null : isAuthenticated ? (
           <>
             <Link to="/me/bookings">{t("nav.myBookings")}</Link>

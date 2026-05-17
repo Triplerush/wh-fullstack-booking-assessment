@@ -1,9 +1,10 @@
+"""Modelo de usuario personalizado con email como identificador de login."""
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
 
 
 class UserManager(BaseUserManager):
-    """Email-as-username manager."""
+    """Gestor de usuarios que usa el email como identificador de login."""
 
     use_in_migrations = True
 

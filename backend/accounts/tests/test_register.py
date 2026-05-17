@@ -1,4 +1,3 @@
-"""Iter-1 tests: registration endpoint."""
 import pytest
 from django.contrib.auth import get_user_model
 from rest_framework.test import APIClient

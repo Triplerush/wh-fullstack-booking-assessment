@@ -1,20 +1,53 @@
 {
-  "app": {
-    "title": "Wind Homes"
-  },
+  "app": { "title": "Wind Homes" },
   "nav": {
     "login": "Iniciar sesión",
     "register": "Registrarse",
     "logout": "Cerrar sesión",
     "myBookings": "Mis reservas",
-    "greeting": "Hola, {{name}}"
+    "greeting": "Hola, {{name}}",
+    "search": "Buscar",
+    "home": "Inicio"
   },
-  "footer": {
-    "tagline": "Alquileres con alma."
-  },
+  "footer": { "tagline": "Alquileres con alma." },
   "home": {
     "title": "Wind Homes",
-    "subtitle": "Alquileres vacacionales. Catálogo y búsqueda pronto"
+    "subtitle": "Encuentra tu próximo alojamiento.",
+    "featured": "Destacados",
+    "noFeatured": "Aún no hay destacados."
+  },
+  "search": {
+    "location": "Ubicación",
+    "allLocations": "Todas las ubicaciones",
+    "checkIn": "Llegada",
+    "checkOut": "Salida",
+    "guests": "Huéspedes",
+    "submit": "Buscar",
+    "resultsCount": "{{count}} resultados",
+    "empty": "No encontramos propiedades con esos filtros."
+  },
+  "common": {
+    "loading": "Cargando…",
+    "errorLoading": "No se pudo cargar."
+  },
+  "catalog": {
+    "night": "noche",
+    "guests_one": "{{count}} huésped",
+    "guests_other": "{{count}} huéspedes",
+    "bedrooms": "habs.",
+    "bathrooms": "baños"
+  },
+  "property": {
+    "about": "Sobre el alojamiento",
+    "capacity": "Capacidad",
+    "amenities": "Amenidades",
+    "location": "Ubicación",
+    "mapPlaceholder": "Mapa (próximamente)",
+    "noAmenities": "Sin amenidades registradas.",
+    "bookingComingSoon": "El flujo de reserva estará disponible en breve.",
+    "checkAvailability": "Comprobar disponibilidad",
+    "notFound": "Propiedad no encontrada.",
+    "backToSearch": "Volver a la búsqueda"
   },
   "auth": {
     "email": "Email",
@@ -38,9 +71,6 @@
     }
   },
   "bookings": {
-    "mine": {
-      "title": "Mis reservas",
-      "empty": "Sin reservas aún."
-    }
+    "mine": { "title": "Mis reservas", "empty": "Sin reservas aún." }
   }
 }

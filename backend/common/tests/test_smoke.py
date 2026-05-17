@@ -1,4 +1,4 @@
-"""Smoke test: Django boots with the dev settings module."""
+"""Test de humo: Django arranca con el módulo de settings de desarrollo."""
 from django.conf import settings
 
 

@@ -1,20 +1,53 @@
 {
-  "app": {
-    "title": "Wind Homes"
-  },
+  "app": { "title": "Wind Homes" },
   "nav": {
     "login": "Sign in",
     "register": "Sign up",
     "logout": "Sign out",
     "myBookings": "My bookings",
-    "greeting": "Hi, {{name}}"
+    "greeting": "Hi, {{name}}",
+    "search": "Search",
+    "home": "Home"
   },
-  "footer": {
-    "tagline": "Rentals with soul."
-  },
+  "footer": { "tagline": "Rentals with soul." },
   "home": {
     "title": "Wind Homes",
-    "subtitle": "Holiday rentals. Catalog and search soon"
+    "subtitle": "Find your next stay.",
+    "featured": "Featured",
+    "noFeatured": "No featured properties yet."
+  },
+  "search": {
+    "location": "Location",
+    "allLocations": "All locations",
+    "checkIn": "Check-in",
+    "checkOut": "Check-out",
+    "guests": "Guests",
+    "submit": "Search",
+    "resultsCount": "{{count}} results",
+    "empty": "No properties match these filters."
+  },
+  "common": {
+    "loading": "Loading…",
+    "errorLoading": "Failed to load."
+  },
+  "catalog": {
+    "night": "night",
+    "guests_one": "{{count}} guest",
+    "guests_other": "{{count}} guests",
+    "bedrooms": "bd",
+    "bathrooms": "ba"
+  },
+  "property": {
+    "about": "About",
+    "capacity": "Capacity",
+    "amenities": "Amenities",
+    "location": "Location",
+    "mapPlaceholder": "Map (coming soon)",
+    "noAmenities": "No amenities yet.",
+    "bookingComingSoon": "Booking flow lands soon.",
+    "checkAvailability": "Check availability",
+    "notFound": "Property not found.",
+    "backToSearch": "Back to search"
   },
   "auth": {
     "email": "Email",
@@ -38,9 +71,6 @@
     }
   },
   "bookings": {
-    "mine": {
-      "title": "My bookings",
-      "empty": "No bookings yet."
-    }
+    "mine": { "title": "My bookings", "empty": "No bookings yet." }
   }
 }

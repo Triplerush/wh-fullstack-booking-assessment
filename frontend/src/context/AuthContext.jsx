@@ -58,7 +58,7 @@ export function AuthProvider({ children }) {
       try {
         await authApi.logout({ refresh });
       } catch (_err) {
-        // ignore — tokens get cleared either way
+        // se ignora — los tokens se borran igual
       }
     }
     clearTokens();

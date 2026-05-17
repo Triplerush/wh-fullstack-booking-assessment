@@ -69,6 +69,6 @@ class RegisterSerializer(serializers.ModelSerializer):
 
 
 class EmailTokenObtainPairSerializer(TokenObtainPairSerializer):
-    """Login serializer using email-as-username"""
+    """Serializador de login que usa el email como identificador."""
 
     username_field = User.USERNAME_FIELD

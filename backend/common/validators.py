@@ -1,4 +1,4 @@
-"""Shared validators (password rule, phone regexes)."""
+"""Validadores compartidos (regla de contraseña y formato de teléfono)."""
 import re
 
 from rest_framework import serializers
@@ -11,7 +11,7 @@ _HAS_DIGIT = re.compile(r"\d")
 
 
 def password_letters_and_digits(value: str) -> None:
-    """`decisions.md` §9: min 8 chars, ≥1 letter, ≥1 digit."""
+    """Contraseña: mínimo 8 caracteres, al menos una letra y un dígito."""
     if len(value) < 8:
         raise serializers.ValidationError(
             "Password must be at least 8 characters long."

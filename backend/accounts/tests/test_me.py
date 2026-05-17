@@ -1,4 +1,4 @@
-"""Iter-1 tests: /auth/me/ endpoint."""
+"""Tests del endpoint /auth/me/."""
 import pytest
 from rest_framework.test import APIClient
 

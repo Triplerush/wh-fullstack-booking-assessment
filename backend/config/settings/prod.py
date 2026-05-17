@@ -1,6 +1,6 @@
-"""Production settings.
+"""Settings de producción.
 
-Same pattern as `dev`: re-export every name `base` defines, then override.
+Mismo patrón que `dev`: reexporta cada nombre definido en `base` y sobreescribe.
 """
 import os
 

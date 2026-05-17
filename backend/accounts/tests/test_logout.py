@@ -1,4 +1,4 @@
-"""Iter-1 test: logout blacklists the refresh token."""
+"""Test: el logout añade el refresh token al blacklist."""
 import pytest
 from rest_framework.test import APIClient
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -19,7 +19,7 @@ def test_logout_blacklists_refresh_token():
     response = client.post(LOGOUT_URL, {"refresh": refresh}, format="json")
     assert response.status_code == 205, response.data
 
-    # Using the same refresh after logout must fail.
+    # Reutilizar el mismo refresh tras el logout debe fallar.
     anon = APIClient()
     refresh_response = anon.post(REFRESH_URL, {"refresh": refresh}, format="json")
     assert refresh_response.status_code == 401

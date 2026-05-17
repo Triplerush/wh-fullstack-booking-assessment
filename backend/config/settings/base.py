@@ -1,4 +1,4 @@
-"""Base settings shared by dev and prod."""
+"""Settings base compartidos entre desarrollo y producción."""
 import os
 from pathlib import Path
 
