@@ -1,26 +1,19 @@
 import { forwardRef } from "react";
+
 import { FormError } from "./FormError";
 
 export const TextInput = forwardRef(function TextInput(
-  { label, error, type = "text", ...rest },
+  { label, error, type = "text", className = "", ...rest },
   ref,
 ) {
   return (
-    <label style={{ display: "block", marginBottom: "var(--space-3)" }}>
-      <span style={{ display: "block", marginBottom: "var(--space-1)", fontSize: "0.9rem" }}>
-        {label}
-      </span>
+    <label className={`field ${className}`}>
+      {label ? <span className="field-label">{label}</span> : null}
       <input
         ref={ref}
         type={type}
-        style={{
-          width: "100%",
-          padding: "var(--space-2) var(--space-3)",
-          border: "1px solid var(--color-border)",
-          borderRadius: "var(--radius-sm)",
-          minHeight: "44px",
-          fontFamily: "inherit",
-        }}
+        aria-invalid={error ? "true" : undefined}
+        className={`field-input${error ? " error" : ""}`}
         {...rest}
       />
       <FormError>{error}</FormError>

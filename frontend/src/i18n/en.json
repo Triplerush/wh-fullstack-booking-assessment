@@ -1,34 +1,107 @@
 {
-  "app": { "title": "Wind Homes" },
+  "app": { "title": "Wind Homes", "tagline": "Curated stays" },
   "nav": {
     "login": "Sign in",
-    "register": "Sign up",
+    "register": "Create account",
     "logout": "Sign out",
     "myBookings": "My bookings",
     "greeting": "Hi, {{name}}",
     "search": "Search",
     "home": "Home"
   },
-  "footer": { "tagline": "Rentals with soul." },
+  "footer": {
+    "tagline": "Rentals with soul. Long and short stays, hand-picked.",
+    "destinations": { "title": "Destinations" },
+    "discover": {
+      "title": "Discover",
+      "collection": "The Collection",
+      "casa": "Casa Wind",
+      "benefits": "Guest benefits"
+    },
+    "services": {
+      "title": "Services",
+      "longStays": "Groups & long stays",
+      "events": "Events & productions",
+      "guides": "Guides"
+    },
+    "help": {
+      "title": "Terms & conditions",
+      "faq": "FAQ",
+      "terms": "Terms of service",
+      "privacy": "Privacy policy"
+    },
+    "about": {
+      "title": "About",
+      "who": "Who we are",
+      "blog": "Blog & news",
+      "careers": "Careers"
+    },
+    "contact": {
+      "title": "Contact us",
+      "email": "hola@wind-homes.test",
+      "phone": "+34 900 000 000",
+      "whatsapp": "WhatsApp: +34 600 000 000"
+    },
+    "social": { "title": "Follow us" }
+  },
   "home": {
-    "title": "Wind Homes",
-    "subtitle": "Find your next stay.",
-    "featured": "Featured",
-    "noFeatured": "No featured properties yet."
+    "heroTitleA": "Home experience,",
+    "heroTitleB": "hotel quality",
+    "heroEyebrow": "The best of both worlds",
+    "featuredTitle": "Featured properties",
+    "featuredCopy": "Discover our curated selection of properties in the best Spanish cities. Design, location and service to make your stay memorable.",
+    "filterAll": "All",
+    "filterCollection": "The Collection",
+    "filterCasa": "Casa Wind",
+    "noFeatured": "No featured properties yet.",
+    "whyTitle": "Why travel to Spain",
+    "whyEyebrow": "Spain",
+    "whyA": {
+      "title": "Culture without filters",
+      "body": "Millennia of heritage, lively cities and neighbourhoods with their own identity: from Madrid to Seville, every stop tells a different story."
+    },
+    "whyB": {
+      "title": "The Mediterranean at your pace",
+      "body": "Costa Brava beaches, local gastronomy and a climate that invites you to linger at any table, any day of the year."
+    },
+    "whyC": {
+      "title": "Short distances",
+      "body": "High-speed trains and affordable flights connect the main destinations in just a few hours — perfect to combine multiple cities."
+    },
+    "whyD": {
+      "title": "Designed stays",
+      "body": "Our homes are placed in neighbourhoods where life actually happens, with services designed so you only worry about enjoying."
+    },
+    "ctaTitle": "Long-term rentals",
+    "ctaCopy": "Discover the comfort and convenience of staying with us for extended periods. Take advantage of our special rates designed exclusively for long stays, offering a continuous experience of quality and comfort.",
+    "ctaButton": "Contact us"
   },
   "search": {
-    "location": "Location",
-    "allLocations": "All locations",
+    "location": "City or destination",
+    "locationPlaceholder": "Where are you going?",
+    "allLocations": "All cities",
     "checkIn": "Check-in",
     "checkOut": "Check-out",
     "guests": "Guests",
+    "guestsPlaceholder": "2 guests",
     "submit": "Search",
+    "viewList": "Switch to list view",
+    "viewGrid": "Switch to grid view",
     "resultsCount": "{{count}} results",
-    "empty": "No properties match these filters."
+    "empty": "No properties match these filters.",
+    "filtersAll": "All",
+    "filtersTop": "Top picks",
+    "filtersWithPool": "With pool",
+    "filtersDesign": "Design"
   },
   "common": {
     "loading": "Loading…",
-    "errorLoading": "Failed to load."
+    "errorLoading": "Failed to load.",
+    "networkError": "You appear to be offline. Check your connection and try again.",
+    "serverError": "The server had a problem. Try again in a moment.",
+    "retry": "Retry",
+    "previous": "Previous",
+    "next": "Next"
   },
   "catalog": {
     "night": "night",
@@ -44,14 +117,20 @@
     "capacity": "Capacity",
     "amenities": "Amenities",
     "location": "Location",
-    "mapPlaceholder": "Map (coming soon)",
+    "mapPlaceholder": "Map (reference)",
     "noAmenities": "No amenities yet.",
     "bookingComingSoon": "Booking flow lands soon.",
     "checkAvailability": "Check availability",
     "availabilityError": "Couldn't check availability.",
     "reserve": "Reserve",
     "notFound": "Property not found.",
-    "backToSearch": "Back to search"
+    "backToSearch": "Back to search",
+    "tabDaily": "Daily",
+    "tabMonthly": "Monthly",
+    "monthlyDisabled": "(coming soon)",
+    "viewAll": "View all",
+    "galleryTitle": "Gallery",
+    "closeGallery": "Close"
   },
   "checkout": {
     "title": "Confirm and pay",
@@ -73,14 +152,23 @@
     "dates": "Dates",
     "nights": "Nights",
     "guests": "Guests",
-    "total": "Total"
+    "total": "Total",
+    "summaryTitle": "Your booking summary"
   },
   "confirmation": {
     "title": "Booking confirmed!",
     "intro": "An email with the details was sent to {{email}}.",
+    "greeting": "Hi there!",
+    "greetingNamed": "Hi {{name}}!",
+    "thanks": "Thank you for choosing Wind Homes for your next stay",
+    "lead": "You're all set to start your Wind Homes Experience!",
+    "bodyA": "Your booking is confirmed and we can't wait to welcome you. We'll send you all check-in details before your arrival.",
+    "bodyB": "We've emailed your booking details to {{email}}. If you have any questions, feel free to reach out.",
+    "summaryTitle": "Booking summary",
     "code": "Booking code",
     "status": "Status",
     "total": "Total",
+    "tagline": "HOME EXPERIENCE, HOTEL QUALITY",
     "goToMyBookings": "Go to my bookings",
     "notFound": "Booking not found."
   },
@@ -94,13 +182,19 @@
     "birthDate": "Date of birth",
     "submitting": "Submitting…",
     "invalidCredentials": "Invalid credentials.",
+    "showPassword": "Show password",
+    "hidePassword": "Hide password",
     "login": {
       "title": "Sign in",
+      "intro": "Sign in to manage your bookings.",
       "submit": "Sign in",
-      "noAccount": "Don't have an account?"
+      "noAccount": "Don't have an account?",
+      "inlineTitle": "Sign in",
+      "inlineIntro": "If you already have an account, sign in to book faster."
     },
     "register": {
       "title": "Create account",
+      "intro": "We need a few details to issue your bookings.",
       "submit": "Create account",
       "hasAccount": "Already have an account?"
     }

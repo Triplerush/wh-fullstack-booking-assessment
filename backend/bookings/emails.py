@@ -36,11 +36,29 @@ def send_booking_confirmation(booking_id: int) -> bool:
         getattr(booking.property, f"title_{lang}", None)
         or booking.property.title_es
     )
+    full_name = (booking.user.full_name or "").strip()
+    if full_name:
+        user_first_name = full_name.split(" ", 1)[0]
+    else:
+        user_first_name = booking.user.email.split("@", 1)[0]
+    cover = (
+        booking.property.images.filter(is_cover=True).first()
+        or booking.property.images.order_by("order").first()
+    )
+    property_image_url = ""
+    if cover and cover.image:
+        property_image_url = cover.image.url
+        if property_image_url.startswith("/"):
+            base = getattr(settings, "SITE_URL", "").rstrip("/")
+            if base:
+                property_image_url = f"{base}{property_image_url}"
     context = {
         "booking": booking,
         "user_name": booking.user.full_name or booking.user.email,
+        "user_first_name": user_first_name,
         "property_title": property_title,
         "property_address": booking.property.address,
+        "property_image_url": property_image_url,
         "nights": booking.compute_nights(),
         "lang": lang,
     }

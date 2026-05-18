@@ -3,7 +3,6 @@ import { useTranslation } from "react-i18next";
 import { Link, useParams } from "react-router-dom";
 
 import { getBooking } from "../api/bookings";
-import { BookingSummaryCard } from "../components/booking/BookingSummaryCard";
 import { formatPrice } from "../utils/currency";
 
 export function BookingConfirmationPage() {
@@ -15,57 +14,88 @@ export function BookingConfirmationPage() {
     queryFn: () => getBooking(id),
   });
 
-  if (query.isLoading) return <p>{t("common.loading")}</p>;
-  if (query.isError) return <p>{t("confirmation.notFound")}</p>;
+  if (query.isLoading) {
+    return (
+      <div style={{ padding: 48, textAlign: "center" }}>
+        {t("common.loading")}
+      </div>
+    );
+  }
+  if (query.isError) {
+    return (
+      <div style={{ padding: 48, textAlign: "center" }}>
+        {t("confirmation.notFound")}
+      </div>
+    );
+  }
   const booking = query.data;
+  const lang = i18n.language;
 
-  const draftLike = {
-    propertyTitle: booking.property.title,
-    coverImageUrl: booking.property.cover_image?.url ?? null,
-    locationName: booking.property.location?.name ?? "",
-    checkIn: booking.check_in,
-    checkOut: booking.check_out,
-    nights: booking.nights,
-    guests: booking.guests,
-    totalPrice: booking.total_price,
-    currency: booking.currency,
-  };
+  const dateFmt = new Intl.DateTimeFormat(lang, {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+  const dateRange = `${dateFmt.format(new Date(booking.check_in))} — ${dateFmt.format(new Date(booking.check_out))}`;
+
+  const nightlyTotal = Number(booking.total_price);
+  const cover = booking.property.cover_image;
 
   return (
-    <div
-      style={{
-        display: "grid",
-        gridTemplateColumns: "minmax(0, 2fr) minmax(0, 1fr)",
-        gap: "var(--space-5)",
-      }}
-    >
-      <section>
-        <h2 style={{ marginBottom: "var(--space-2)" }}>{t("confirmation.title")}</h2>
-        <p style={{ color: "var(--color-text-muted)", marginBottom: "var(--space-4)" }}>
-          {t("confirmation.intro", { email: booking.user?.email })}
-        </p>
-        <dl
-          style={{
-            display: "grid",
-            gridTemplateColumns: "auto 1fr",
-            rowGap: "var(--space-3)",
-            columnGap: "var(--space-4)",
-          }}
-        >
-          <dt>{t("confirmation.code")}</dt>
-          <dd style={{ margin: 0, fontFamily: "monospace" }}>{booking.code}</dd>
-          <dt>{t("confirmation.status")}</dt>
-          <dd style={{ margin: 0 }}>{booking.status}</dd>
-          <dt>{t("confirmation.total")}</dt>
-          <dd style={{ margin: 0, fontWeight: 600 }}>
-            {formatPrice(booking.total_price, booking.currency, i18n.language)}
-          </dd>
-        </dl>
-        <p style={{ marginTop: "var(--space-5)" }}>
-          <Link to="/me/bookings">{t("confirmation.goToMyBookings")}</Link>
+    <article className="confirmation-page">
+      <h1 className="confirmation-greeting">{t("confirmation.greeting")}</h1>
+      <p className="confirmation-eyebrow">{t("confirmation.thanks")}</p>
+
+      {cover?.url ? (
+        <div className="confirmation-image">
+          <img src={cover.url} alt={cover.alt || booking.property.title} />
+        </div>
+      ) : null}
+
+      <p className="confirmation-lead">{t("confirmation.lead")}</p>
+      <p className="confirmation-body">
+        {t("confirmation.bodyA")}
+        <br />
+        {t("confirmation.bodyB", { email: booking.user?.email })}
+      </p>
+
+      <hr className="confirmation-divider" />
+
+      <section className="confirmation-details" aria-label={t("confirmation.summaryTitle")}>
+        <h2>{booking.property.title}</h2>
+        {booking.property.address ? (
+          <p className="address">{booking.property.address}</p>
+        ) : null}
+        <p className="dates">{dateRange}</p>
+
+        <table className="confirmation-table">
+          <tbody>
+            <tr>
+              <td>{t("catalog.nights", { count: booking.nights })}</td>
+              <td>{formatPrice(nightlyTotal, booking.currency, lang)}</td>
+            </tr>
+            <tr className="total">
+              <td>{t("confirmation.total")}</td>
+              <td>{formatPrice(nightlyTotal, booking.currency, lang)}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p className="confirmation-body" style={{ marginTop: 18, fontSize: 12 }}>
+          {t("confirmation.code")}:{" "}
+          <strong style={{ fontFamily: "ui-monospace, monospace" }}>
+            {booking.code}
+          </strong>
         </p>
       </section>
-      <BookingSummaryCard draft={draftLike} />
-    </div>
+
+      <div className="confirmation-actions">
+        <Link to="/me/bookings" className="btn btn-outline">
+          {t("confirmation.goToMyBookings")}
+        </Link>
+      </div>
+
+      <p className="confirmation-footer">{t("confirmation.tagline")}</p>
+    </article>
   );
 }

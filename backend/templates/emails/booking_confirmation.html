@@ -1,38 +1,141 @@
-<!doctype html>
+{% load l10n %}<!doctype html>
 <html lang="{{ lang }}">
-  <body style="font-family: Helvetica, Arial, sans-serif; color: #1a1a1a; line-height: 1.5;">
-    {% if lang == "en" %}
-      <h1 style="color:#1f3a5f">Booking confirmed</h1>
-      <p>Hi {{ user_name }},</p>
-      <p>Your booking is confirmed. Here are the details:</p>
-      <table style="border-collapse: collapse; width: 100%; max-width: 480px;">
-        <tr><td><strong>Booking code</strong></td><td>{{ booking.code }}</td></tr>
-        <tr><td><strong>Property</strong></td><td>{{ property_title }}</td></tr>
-        <tr><td><strong>Address</strong></td><td>{{ property_address }}</td></tr>
-        <tr><td><strong>Check-in</strong></td><td>{{ booking.check_in }}</td></tr>
-        <tr><td><strong>Check-out</strong></td><td>{{ booking.check_out }}</td></tr>
-        <tr><td><strong>Nights</strong></td><td>{{ nights }}</td></tr>
-        <tr><td><strong>Guests</strong></td><td>{{ booking.guests }}</td></tr>
-        <tr><td><strong>Total</strong></td><td>{{ booking.total_price }} {{ booking.currency }}</td></tr>
-      </table>
-      <p>We hope you enjoy your stay.</p>
-      <p>— Wind Homes</p>
-    {% else %}
-      <h1 style="color:#1f3a5f">Reserva confirmada</h1>
-      <p>Hola {{ user_name }},</p>
-      <p>Tu reserva está confirmada. Estos son los detalles:</p>
-      <table style="border-collapse: collapse; width: 100%; max-width: 480px;">
-        <tr><td><strong>Código de reserva</strong></td><td>{{ booking.code }}</td></tr>
-        <tr><td><strong>Propiedad</strong></td><td>{{ property_title }}</td></tr>
-        <tr><td><strong>Dirección</strong></td><td>{{ property_address }}</td></tr>
-        <tr><td><strong>Entrada</strong></td><td>{{ booking.check_in }}</td></tr>
-        <tr><td><strong>Salida</strong></td><td>{{ booking.check_out }}</td></tr>
-        <tr><td><strong>Noches</strong></td><td>{{ nights }}</td></tr>
-        <tr><td><strong>Huéspedes</strong></td><td>{{ booking.guests }}</td></tr>
-        <tr><td><strong>Total</strong></td><td>{{ booking.total_price }} {{ booking.currency }}</td></tr>
-      </table>
-      <p>Disfruta tu estancia.</p>
-      <p>— Wind Homes</p>
-    {% endif %}
-  </body>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% if lang == "en" %}Booking confirmed{% else %}Reserva confirmada{% endif %}</title>
+</head>
+<!--
+  Plantilla del email de confirmación.
+
+  Replica el diseño de la captura "correo.png" usando solo CSS inline y
+  tablas anidadas, que es el patrón estándar para máxima compatibilidad
+  con clientes de email (Gmail, Outlook, Apple Mail).
+
+  No incluimos features fuera del brief (Wynwood Points, servicios
+  adicionales, "Otros destinos", App stores, redes sociales).
+-->
+<body style="margin:0; padding:0; background:#fafaf7; font-family:Helvetica,Arial,sans-serif; color:#1a1a1a;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#fafaf7; padding:32px 16px;">
+    <tr>
+      <td align="center">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:600px; background:#ffffff;">
+
+          <!-- Brand row -->
+          <tr>
+            <td align="center" style="padding:24px 24px 8px;">
+              <span style="font-family:Helvetica,Arial,sans-serif; font-size:22px; font-weight:700; letter-spacing:0.04em; color:#000;">Wind Homes</span>
+            </td>
+          </tr>
+
+          <!-- Greeting -->
+          <tr>
+            <td align="center" style="padding:32px 24px 0;">
+              <h1 style="margin:0; font-family:Georgia,'Times New Roman',serif; font-style:italic; font-weight:400; font-size:36px; line-height:1.1; color:#000;">
+                {% if lang == "en" %}Hi {{ user_first_name }}!{% else %}¡Hola {{ user_first_name }}!{% endif %}
+              </h1>
+            </td>
+          </tr>
+
+          <!-- Eyebrow -->
+          <tr>
+            <td align="center" style="padding:18px 24px 0;">
+              <p style="margin:0; font-size:12px; letter-spacing:0.25em; text-transform:uppercase; color:#1a1a1a; line-height:1.6;">
+                {% if lang == "en" %}Thank you for choosing Wind Homes{% else %}Gracias por elegir Wind Homes{% endif %}
+              </p>
+            </td>
+          </tr>
+
+          <!-- Property image -->
+          {% if property_image_url %}
+          <tr>
+            <td style="padding:32px 24px 0;">
+              <img src="{{ property_image_url }}" alt="{{ property_title }}" width="552" style="display:block; width:100%; max-width:552px; height:auto; border-radius:4px;">
+            </td>
+          </tr>
+          {% endif %}
+
+          <!-- Lead + body -->
+          <tr>
+            <td align="center" style="padding:32px 24px 0;">
+              <p style="margin:0 0 14px; font-size:16px; font-weight:600; color:#000;">
+                {% if lang == "en" %}You're all set to start your Wind Homes Experience!{% else %}¡Ya estás listo para comenzar tu Wind Homes Experience!{% endif %}
+              </p>
+              <p style="margin:0; font-size:14px; line-height:1.6; color:#1a1a1a; max-width:480px;">
+                {% if lang == "en" %}
+                  Your booking is confirmed and we can't wait to welcome you. We'll send check-in details before your arrival. If you have any questions, feel free to reach out.
+                {% else %}
+                  Tu reserva ha sido confirmada y esperamos recibirte muy pronto. Previo a tu llegada recibirás toda la información para el ingreso. Si tienes alguna inquietud no dudes en comunicarte con nosotros.
+                {% endif %}
+              </p>
+            </td>
+          </tr>
+
+          <!-- Divider -->
+          <tr>
+            <td style="padding:40px 24px 0;">
+              <hr style="border:0; border-top:1px solid #e3dfd8; margin:0;">
+            </td>
+          </tr>
+
+          <!-- Booking details -->
+          <tr>
+            <td style="padding:32px 24px 0;">
+              <p style="margin:0 0 14px; font-size:13px; letter-spacing:0.2em; text-transform:uppercase; color:#6b6b6b;">
+                {% if lang == "en" %}Booking summary{% else %}Resumen de tu reserva{% endif %}
+              </p>
+              <h2 style="margin:0 0 6px; font-family:Helvetica,Arial,sans-serif; font-size:20px; font-weight:700; color:#000;">
+                {{ property_title }}
+              </h2>
+              {% if property_address %}
+              <p style="margin:0; font-size:13px; color:#6b6b6b;">{{ property_address }}</p>
+              {% endif %}
+              <p style="margin:6px 0 0; font-size:13px; color:#6b6b6b;">
+                {{ booking.check_in|date:"d M Y" }} — {{ booking.check_out|date:"d M Y" }}
+              </p>
+
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:24px; border-collapse:collapse;">
+                <tr>
+                  <td style="padding:8px 0; font-size:14px; color:#000;">
+                    {% if lang == "en" %}
+                      {% if nights == 1 %}{{ nights }} night{% else %}{{ nights }} nights{% endif %}
+                    {% else %}
+                      {% if nights == 1 %}{{ nights }} noche{% else %}{{ nights }} noches{% endif %}
+                    {% endif %}
+                  </td>
+                  <td align="right" style="padding:8px 0; font-size:14px; font-weight:600; color:#000;">
+                    {{ booking.currency }} {{ booking.total_price }}
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding:18px 0 8px; font-size:18px; font-weight:800; color:#000; border-top:1px solid #e3dfd8;">
+                    {% if lang == "en" %}Total{% else %}Total{% endif %}
+                  </td>
+                  <td align="right" style="padding:18px 0 8px; font-size:18px; font-weight:800; color:#000; border-top:1px solid #e3dfd8; text-decoration:underline;">
+                    {{ booking.currency }} {{ booking.total_price }}
+                  </td>
+                </tr>
+              </table>
+
+              <p style="margin:18px 0 0; font-size:12px; color:#1a1a1a;">
+                {% if lang == "en" %}Booking code{% else %}Código de reserva{% endif %}:
+                <strong style="font-family:'Courier New',monospace;">{{ booking.code }}</strong>
+              </p>
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td align="center" style="padding:56px 24px 32px;">
+              <hr style="border:0; border-top:1px solid #e3dfd8; margin:0 0 24px;">
+              <p style="margin:0; font-size:12px; letter-spacing:0.2em; text-transform:uppercase; color:#6b6b6b;">
+                {% if lang == "en" %}Home experience, hotel quality{% else %}Home experience, hotel quality{% endif %}
+              </p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
 </html>

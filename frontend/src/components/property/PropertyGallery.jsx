@@ -1,79 +1,27 @@
-import { useState } from "react";
-
 export function PropertyGallery({ images = [] }) {
-  const [active, setActive] = useState(0);
   if (!images.length) {
     return (
-      <div
-        style={{
-          height: 360,
-          background: "var(--color-surface-alt)",
-          borderRadius: "var(--radius-md)",
-        }}
-      />
+      <div className="gallery">
+        <div className="gallery-main" />
+      </div>
     );
   }
-  const current = images[active] ?? images[0];
+
+  const main = images[0];
+  const side = images.slice(1, 3);
+
   return (
-    <div>
-      <div
-        style={{
-          width: "100%",
-          aspectRatio: "16 / 9",
-          background: "var(--color-surface-alt)",
-          borderRadius: "var(--radius-md)",
-          overflow: "hidden",
-        }}
-      >
-        <img
-          src={current.url}
-          alt={current.alt}
-          style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-        />
+    <div className="gallery">
+      <div className="gallery-main">
+        <img src={main.url} alt={main.alt || ""} />
       </div>
-      {images.length > 1 ? (
-        <ul
-          style={{
-            listStyle: "none",
-            padding: 0,
-            margin: "var(--space-3) 0 0",
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(80px, 1fr))",
-            gap: "var(--space-2)",
-          }}
-        >
-          {images.map((img, idx) => (
-            <li key={img.id}>
-              <button
-                type="button"
-                onClick={() => setActive(idx)}
-                aria-pressed={idx === active}
-                style={{
-                  display: "block",
-                  width: "100%",
-                  padding: 0,
-                  border:
-                    idx === active
-                      ? "2px solid var(--color-brand-accent)"
-                      : "1px solid var(--color-border)",
-                  borderRadius: "var(--radius-sm)",
-                  overflow: "hidden",
-                  cursor: "pointer",
-                  background: "var(--color-surface-alt)",
-                  aspectRatio: "1 / 1",
-                }}
-              >
-                <img
-                  src={img.url}
-                  alt={img.alt}
-                  loading="lazy"
-                  style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-                />
-              </button>
-            </li>
-          ))}
-        </ul>
-      ) : null}
+      <div className="gallery-side">
+        {side.map((img) => (
+          <div className="gallery-cell" key={img.id}>
+            <img src={img.url} alt={img.alt || ""} loading="lazy" />
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

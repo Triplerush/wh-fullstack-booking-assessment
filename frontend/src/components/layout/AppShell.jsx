@@ -1,19 +1,29 @@
+import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
+
+import { ToastStack } from "../ui/Toast";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
 
 export function AppShell({ children }) {
+  const { i18n } = useTranslation();
+
+  useEffect(() => {
+    const apply = () => {
+      const code = (i18n.language || "es").slice(0, 2);
+      document.documentElement.lang = code;
+    };
+    apply();
+    i18n.on("languageChanged", apply);
+    return () => i18n.off("languageChanged", apply);
+  }, [i18n]);
+
   return (
-    <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
+    <div className="app-shell">
       <Header />
-      <main style={{ flex: 1, padding: "var(--space-5)" }}>
-        {children ?? (
-          <section>
-            <h2>Wind Homes</h2>
-            <p>Bootstrap shell. Páginas reales aterrizan en las siguientes iteraciones.</p>
-          </section>
-        )}
-      </main>
+      <main>{children}</main>
       <Footer />
+      <ToastStack />
     </div>
   );
 }

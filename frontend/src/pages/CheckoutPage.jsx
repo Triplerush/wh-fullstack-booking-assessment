@@ -2,32 +2,36 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { createBooking } from "../api/bookings";
 import { BookingSummaryCard } from "../components/booking/BookingSummaryCard";
-import { TextInput } from "../components/forms/TextInput";
 import { FormError } from "../components/forms/FormError";
+import { InlineLoginForm } from "../components/forms/InlineLoginForm";
+import { InlineRegisterForm } from "../components/forms/InlineRegisterForm";
+import { TextInput } from "../components/forms/TextInput";
 import { useAuth } from "../context/AuthContext";
 import { mockPaymentSchema } from "../schemas/payment";
 import { applyDrfErrorsToForm } from "../utils/apiErrors";
 import { draftStorage } from "../utils/bookingDraft";
+import { formatCardNumber, formatExpiry } from "../utils/cardMask";
 
 const PAYMENT_FIELDS = ["card_number", "expiry", "cvv", "cardholder", "accept_terms"];
 
 export function CheckoutPage() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { isAuthenticated, isLoading } = useAuth();
-  const location = useLocation();
   const navigate = useNavigate();
   const draft = useMemo(() => draftStorage.read(), []);
   const [banner, setBanner] = useState(null);
+  const [authMode, setAuthMode] = useState("login");
 
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
     setError,
+    setValue,
   } = useForm({
     resolver: zodResolver(mockPaymentSchema),
     defaultValues: {
@@ -39,6 +43,18 @@ export function CheckoutPage() {
     },
   });
 
+  function maskedRegister(name, mask) {
+    const reg = register(name);
+    return {
+      ...reg,
+      onChange: (e) => {
+        const formatted = mask(e.target.value);
+        e.target.value = formatted;
+        setValue(name, formatted, { shouldValidate: false });
+      },
+    };
+  }
+
   useEffect(() => {
     if (!draft) {
       const id = setTimeout(() => navigate("/search", { replace: true }), 0);
@@ -46,14 +62,8 @@ export function CheckoutPage() {
     }
   }, [draft, navigate]);
 
-  if (isLoading) return <p>…</p>;
-  if (!isAuthenticated) {
-    const next = encodeURIComponent(location.pathname);
-    return <Navigate to={`/login?next=${next}`} replace />;
-  }
-  if (!draft) {
-    return <p>{t("checkout.noDraft")}</p>;
-  }
+  if (isLoading) return <p style={{ padding: 48 }}>{t("common.loading")}</p>;
+  if (!draft) return <p style={{ padding: 48 }}>{t("checkout.noDraft")}</p>;
 
   async function onSubmit(_values) {
     setBanner(null);
@@ -63,6 +73,7 @@ export function CheckoutPage() {
         check_in: draft.checkIn,
         check_out: draft.checkOut,
         guests: draft.guests,
+        language: i18n.language?.slice(0, 2),
       });
       draftStorage.clear();
       navigate(`/booking/${booking.id}/confirmation`, { replace: true });
@@ -72,72 +83,102 @@ export function CheckoutPage() {
     }
   }
 
+  const paymentDisabled = !isAuthenticated;
+
   return (
-    <div
-      style={{
-        display: "grid",
-        gridTemplateColumns: "minmax(0, 2fr) minmax(0, 1fr)",
-        gap: "var(--space-5)",
-      }}
-    >
+    <div className="form-page">
       <section>
-        <h2 style={{ marginBottom: "var(--space-4)" }}>{t("checkout.title")}</h2>
-        <form onSubmit={handleSubmit(onSubmit)} noValidate>
-          <h3 style={{ marginBottom: "var(--space-3)" }}>{t("checkout.paymentDetails")}</h3>
+        <h1 className="form-title">{t("checkout.title")}</h1>
+        <p className="form-intro">{t("checkout.guest.subtitle")}</p>
+
+        {!isAuthenticated ? (
+          authMode === "login" ? (
+            <InlineLoginForm
+              onSuccess={() => undefined}
+              onSwitchToRegister={() => setAuthMode("register")}
+            />
+          ) : (
+            <>
+              <InlineRegisterForm onSuccess={() => undefined} />
+              <div className="inline-auth-switch">
+                <button
+                  type="button"
+                  onClick={() => setAuthMode("login")}
+                  className="link-button"
+                >
+                  {t("auth.register.hasAccount")}{" "}
+                  <span className="link-button-strong">{t("auth.login.submit")}</span>
+                </button>
+              </div>
+            </>
+          )
+        ) : null}
+
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          noValidate
+          aria-disabled={paymentDisabled}
+          style={{ opacity: paymentDisabled ? 0.55 : 1 }}
+        >
+          <h2 className="form-title small">{t("checkout.paymentDetails")}</h2>
+          {paymentDisabled ? (
+            <p className="form-note" style={{ marginBottom: 16 }}>
+              {t("checkout.paymentLockedHint")}
+            </p>
+          ) : null}
           <TextInput
             label={t("checkout.cardholder")}
             autoComplete="cc-name"
             {...register("cardholder")}
             error={errors.cardholder?.message}
+            disabled={paymentDisabled}
           />
           <TextInput
             label={t("checkout.cardNumber")}
             inputMode="numeric"
-            placeholder="4111111111111111"
+            placeholder="4111 1111 1111 1111"
             autoComplete="cc-number"
-            {...register("card_number")}
+            maxLength={23}
+            {...maskedRegister("card_number", formatCardNumber)}
             error={errors.card_number?.message}
+            disabled={paymentDisabled}
           />
-          <div style={{ display: "flex", gap: "var(--space-3)" }}>
-            <div style={{ flex: 1 }}>
-              <TextInput
-                label={t("checkout.expiry")}
-                placeholder="MM/AA"
-                autoComplete="cc-exp"
-                {...register("expiry")}
-                error={errors.expiry?.message}
-              />
-            </div>
-            <div style={{ flex: 1 }}>
-              <TextInput
-                label={t("checkout.cvv")}
-                inputMode="numeric"
-                autoComplete="cc-csc"
-                {...register("cvv")}
-                error={errors.cvv?.message}
-              />
-            </div>
+          <div className="form-grid">
+            <TextInput
+              label={t("checkout.expiry")}
+              inputMode="numeric"
+              placeholder="MM/AA"
+              autoComplete="cc-exp"
+              maxLength={5}
+              {...maskedRegister("expiry", formatExpiry)}
+              error={errors.expiry?.message}
+              disabled={paymentDisabled}
+            />
+            <TextInput
+              label={t("checkout.cvv")}
+              inputMode="numeric"
+              maxLength={4}
+              autoComplete="cc-csc"
+              {...register("cvv")}
+              error={errors.cvv?.message}
+              disabled={paymentDisabled}
+            />
           </div>
-          <label style={{ display: "flex", gap: "var(--space-2)", alignItems: "center", marginTop: "var(--space-3)" }}>
-            <input type="checkbox" {...register("accept_terms")} />
+          <label className="check-row">
+            <input
+              type="checkbox"
+              {...register("accept_terms")}
+              disabled={paymentDisabled}
+            />
             <span>{t("checkout.acceptTerms")}</span>
           </label>
           <FormError>{errors.accept_terms?.message}</FormError>
           <FormError>{banner}</FormError>
           <button
             type="submit"
-            disabled={isSubmitting}
-            style={{
-              marginTop: "var(--space-4)",
-              padding: "var(--space-3) var(--space-5)",
-              minHeight: 44,
-              background: "var(--color-brand)",
-              color: "#fff",
-              border: 0,
-              borderRadius: "var(--radius-sm)",
-              cursor: "pointer",
-              fontWeight: 600,
-            }}
+            disabled={isSubmitting || paymentDisabled}
+            className="btn btn-block"
+            style={{ marginTop: 12 }}
           >
             {isSubmitting ? t("auth.submitting") : t("checkout.confirmAndPay")}
           </button>

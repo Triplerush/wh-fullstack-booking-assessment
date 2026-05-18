@@ -5,8 +5,8 @@ import { useTranslation } from "react-i18next";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { z } from "zod";
 
-import { TextInput } from "../components/forms/TextInput";
 import { FormError } from "../components/forms/FormError";
+import { TextInput } from "../components/forms/TextInput";
 import { useAuth } from "../context/AuthContext";
 import { applyDrfErrorsToForm } from "../utils/apiErrors";
 
@@ -42,44 +42,42 @@ export function LoginPage() {
   }
 
   return (
-    <section style={{ maxWidth: 420, margin: "0 auto" }}>
-      <h2 style={{ marginBottom: "var(--space-5)" }}>{t("auth.login.title")}</h2>
-      <form onSubmit={handleSubmit(onSubmit)} noValidate>
-        <TextInput
-          label={t("auth.email")}
-          type="email"
-          autoComplete="email"
-          {...register("email")}
-          error={errors.email?.message}
-        />
-        <TextInput
-          label={t("auth.password")}
-          type="password"
-          autoComplete="current-password"
-          {...register("password")}
-          error={errors.password?.message}
-        />
-        <FormError>{banner}</FormError>
-        <button
-          type="submit"
-          disabled={isSubmitting}
-          style={{
-            marginTop: "var(--space-4)",
-            padding: "var(--space-3) var(--space-5)",
-            minHeight: "44px",
-            background: "var(--color-brand)",
-            color: "#fff",
-            border: 0,
-            borderRadius: "var(--radius-sm)",
-            cursor: "pointer",
-          }}
-        >
-          {isSubmitting ? t("auth.submitting") : t("auth.login.submit")}
-        </button>
-      </form>
-      <p style={{ marginTop: "var(--space-4)" }}>
-        {t("auth.login.noAccount")} <Link to="/register">{t("nav.register")}</Link>
-      </p>
-    </section>
+    <div className="form-page solo">
+      <section>
+        <h1 className="form-title">{t("auth.login.title")}</h1>
+        <p className="form-intro">{t("auth.login.intro")}</p>
+        <form onSubmit={handleSubmit(onSubmit)} noValidate>
+          <TextInput
+            label={t("auth.email")}
+            type="email"
+            autoComplete="email"
+            {...register("email")}
+            error={errors.email?.message}
+          />
+          <TextInput
+            label={t("auth.password")}
+            type="password"
+            autoComplete="current-password"
+            {...register("password")}
+            error={errors.password?.message}
+          />
+          <FormError>{banner}</FormError>
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="btn btn-block"
+            style={{ marginTop: 16 }}
+          >
+            {isSubmitting ? t("auth.submitting") : t("auth.login.submit")}
+          </button>
+        </form>
+        <p style={{ marginTop: 24, fontSize: 13 }}>
+          {t("auth.login.noAccount")}{" "}
+          <Link to="/register" style={{ fontWeight: 800, textDecoration: "underline" }}>
+            {t("auth.register.submit")}
+          </Link>
+        </p>
+      </section>
+    </div>
   );
 }

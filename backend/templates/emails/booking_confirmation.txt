@@ -1,33 +1,39 @@
-{% if lang == "en" %}Hi {{ user_name }},
+{% if lang == "en" %}Hi {{ user_first_name }},
 
-Your booking is confirmed.
+Thank you for choosing Wind Homes.
+
+You're all set to start your Wind Homes Experience! Your booking is confirmed and we can't wait to welcome you. We'll send check-in details before your arrival.
+
+— BOOKING SUMMARY —
+
+{{ property_title }}{% if property_address %}
+{{ property_address }}{% endif %}
+{{ booking.check_in|date:"d M Y" }} — {{ booking.check_out|date:"d M Y" }}
+
+{% if nights == 1 %}{{ nights }} night{% else %}{{ nights }} nights{% endif %}: {{ booking.currency }} {{ booking.total_price }}
+Total: {{ booking.currency }} {{ booking.total_price }}
 
 Booking code: {{ booking.code }}
-Property: {{ property_title }}
-Address: {{ property_address }}
-Check-in: {{ booking.check_in }}
-Check-out: {{ booking.check_out }}
-Nights: {{ nights }}
-Guests: {{ booking.guests }}
-Total: {{ booking.total_price }} {{ booking.currency }}
 
-We hope you enjoy your stay.
-
+HOME EXPERIENCE, HOTEL QUALITY
 — Wind Homes
-{% else %}Hola {{ user_name }},
+{% else %}Hola {{ user_first_name }},
 
-Tu reserva está confirmada.
+Gracias por elegir Wind Homes.
+
+¡Ya estás listo para comenzar tu Wind Homes Experience! Tu reserva ha sido confirmada y esperamos recibirte muy pronto. Previo a tu llegada recibirás toda la información para el ingreso.
+
+— RESUMEN DE TU RESERVA —
+
+{{ property_title }}{% if property_address %}
+{{ property_address }}{% endif %}
+{{ booking.check_in|date:"d M Y" }} — {{ booking.check_out|date:"d M Y" }}
+
+{% if nights == 1 %}{{ nights }} noche{% else %}{{ nights }} noches{% endif %}: {{ booking.currency }} {{ booking.total_price }}
+Total: {{ booking.currency }} {{ booking.total_price }}
 
 Código de reserva: {{ booking.code }}
-Propiedad: {{ property_title }}
-Dirección: {{ property_address }}
-Entrada: {{ booking.check_in }}
-Salida: {{ booking.check_out }}
-Noches: {{ nights }}
-Huéspedes: {{ booking.guests }}
-Total: {{ booking.total_price }} {{ booking.currency }}
 
-Disfruta tu estancia.
-
+HOME EXPERIENCE, HOTEL QUALITY
 — Wind Homes
 {% endif %}

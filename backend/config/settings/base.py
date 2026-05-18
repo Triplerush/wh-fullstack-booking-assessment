@@ -1,4 +1,3 @@
-"""Settings base compartidos entre desarrollo y producción."""
 import os
 from pathlib import Path
 
@@ -86,6 +85,8 @@ STATIC_URL = "static/"
 STATIC_ROOT = BASE_DIR / os.environ.get("STATIC_ROOT", "staticfiles")
 MEDIA_URL = "media/"
 MEDIA_ROOT = BASE_DIR / os.environ.get("MEDIA_ROOT", "media")
+
+SITE_URL = os.environ.get("SITE_URL", "")
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 

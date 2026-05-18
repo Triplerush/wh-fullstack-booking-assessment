@@ -3,11 +3,9 @@ import { useTranslation } from "react-i18next";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 import { checkAvailability } from "../../api/properties";
-import { TextInput } from "../forms/TextInput";
-import { FormError } from "../forms/FormError";
-import { useAuth } from "../../context/AuthContext";
 import { draftStorage } from "../../utils/bookingDraft";
 import { formatPrice } from "../../utils/currency";
+import { FormError } from "../forms/FormError";
 
 function todayISO() {
   return new Date().toISOString().slice(0, 10);
@@ -16,7 +14,6 @@ function todayISO() {
 export function StickyBookingCard({ property }) {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
-  const { isAuthenticated } = useAuth();
   const [params] = useSearchParams();
   const [form, setForm] = useState({
     check_in: params.get("check_in") ?? "",
@@ -81,10 +78,6 @@ export function StickyBookingCard({ property }) {
       totalPrice: quote.total_price,
       currency: quote.currency,
     });
-    if (!isAuthenticated) {
-      navigate(`/login?next=${encodeURIComponent("/checkout")}`);
-      return;
-    }
     navigate("/checkout");
   }
 
@@ -92,94 +85,92 @@ export function StickyBookingCard({ property }) {
     form.check_in && form.check_out && form.guests && form.check_in >= todayISO();
 
   return (
-    <aside
-      style={{
-        position: "sticky",
-        top: "var(--space-5)",
-        padding: "var(--space-5)",
-        border: "1px solid var(--color-border)",
-        borderRadius: "var(--radius-md)",
-        background: "var(--color-surface)",
-        boxShadow: "var(--shadow-card)",
-      }}
-    >
-      <p style={{ margin: 0, fontSize: "1.4rem", fontWeight: 600 }}>
-        {formatPrice(property.price_per_night, property.currency, i18n.language)}{" "}
-        <span style={{ fontSize: "0.9rem", fontWeight: 400, color: "var(--color-text-muted)" }}>
-          / {t("catalog.night")}
-        </span>
+    <aside className="booking-box" id="booking-form">
+      <p className="price-hero">
+        {formatPrice(property.price_per_night, property.currency, i18n.language)}
+        <small>/ {t("catalog.night")}</small>
       </p>
 
-      <form onSubmit={onCheckAvailability} style={{ marginTop: "var(--space-4)" }} noValidate>
-        <TextInput
-          label={t("search.checkIn")}
-          type="date"
-          min={todayISO()}
-          value={form.check_in}
-          onChange={update("check_in")}
-          error={errors?.check_in?.[0]}
-        />
-        <TextInput
-          label={t("search.checkOut")}
-          type="date"
-          min={form.check_in || todayISO()}
-          value={form.check_out}
-          onChange={update("check_out")}
-          error={errors?.check_out?.[0]}
-        />
-        <TextInput
-          label={t("search.guests")}
-          type="number"
-          min="1"
-          max={property.max_guests}
-          value={form.guests}
-          onChange={update("guests")}
-          error={errors?.guests?.[0]}
-        />
+      <div className="booking-tabs" role="tablist">
+        <button type="button" role="tab" aria-pressed="true">
+          {t("property.tabDaily")}
+        </button>
+      </div>
+
+      <form onSubmit={onCheckAvailability} className="booking-form" noValidate>
+        <div className="form-group">
+          <label htmlFor="bk-check-in">{t("search.checkIn")}</label>
+          <input
+            id="bk-check-in"
+            type="date"
+            min={todayISO()}
+            value={form.check_in}
+            onChange={update("check_in")}
+          />
+          {errors?.check_in?.[0] ? (
+            <p className="field-error">{errors.check_in[0]}</p>
+          ) : null}
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="bk-check-out">{t("search.checkOut")}</label>
+          <input
+            id="bk-check-out"
+            type="date"
+            min={form.check_in || todayISO()}
+            value={form.check_out}
+            onChange={update("check_out")}
+          />
+          {errors?.check_out?.[0] ? (
+            <p className="field-error">{errors.check_out[0]}</p>
+          ) : null}
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="bk-guests">{t("search.guests")}</label>
+          <input
+            id="bk-guests"
+            type="number"
+            min="1"
+            max={property.max_guests}
+            value={form.guests}
+            onChange={update("guests")}
+          />
+          {errors?.guests?.[0] ? (
+            <p className="field-error">{errors.guests[0]}</p>
+          ) : null}
+        </div>
+
         <FormError>{banner}</FormError>
+
         <button
           type="submit"
+          className="btn-reserve"
           disabled={!canCheck || pending}
-          style={{
-            marginTop: "var(--space-3)",
-            width: "100%",
-            padding: "var(--space-3)",
-            minHeight: 44,
-            background: canCheck ? "var(--color-brand)" : "var(--color-surface-alt)",
-            color: canCheck ? "#fff" : "var(--color-text-muted)",
-            border: 0,
-            borderRadius: "var(--radius-sm)",
-            cursor: canCheck && !pending ? "pointer" : "not-allowed",
-          }}
         >
           {pending ? t("auth.submitting") : t("property.checkAvailability")}
         </button>
       </form>
 
       {quote ? (
-        <div style={{ marginTop: "var(--space-4)" }}>
-          <p style={{ margin: 0 }}>
-            {formatPrice(property.price_per_night, property.currency, i18n.language)}{" "}
-            × {quote.nights} {t("catalog.nights", { count: quote.nights })} ={" "}
+        <div className="booking-quote">
+          <div className="summary-row">
+            <span>
+              {formatPrice(property.price_per_night, property.currency, i18n.language)} × {quote.nights}{" "}
+              {t("catalog.nights", { count: quote.nights })}
+            </span>
             <strong>{formatPrice(quote.total_price, quote.currency, i18n.language)}</strong>
-          </p>
+          </div>
+          <div className="total-row">
+            <span>{t("checkout.total")}</span>
+            <span>{formatPrice(quote.total_price, quote.currency, i18n.language)}</span>
+          </div>
           <button
             type="button"
             onClick={onReserve}
-            style={{
-              marginTop: "var(--space-3)",
-              width: "100%",
-              padding: "var(--space-3)",
-              minHeight: 44,
-              background: "var(--color-brand-accent)",
-              color: "#111",
-              border: 0,
-              borderRadius: "var(--radius-sm)",
-              fontWeight: 600,
-              cursor: "pointer",
-            }}
+            className="btn-reserve btn-reserve-primary"
           >
-            {t("property.reserve")}
+            {t("property.reserve")} →
           </button>
         </div>
       ) : null}

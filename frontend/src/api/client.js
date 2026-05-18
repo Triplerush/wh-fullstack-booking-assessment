@@ -1,4 +1,6 @@
 import axios from "axios";
+
+import { pushToast } from "../components/ui/Toast";
 import i18n from "../i18n";
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL ?? "http://localhost:8000/api/v1";
@@ -76,6 +78,11 @@ apiClient.interceptors.response.use(
         window.dispatchEvent(new Event("auth:expired"));
         return Promise.reject(error);
       }
+    }
+    if (!error.response) {
+      pushToast({ message: i18n.t("common.networkError"), variant: "error" });
+    } else if (status >= 500) {
+      pushToast({ message: i18n.t("common.serverError"), variant: "error" });
     }
     return Promise.reject(error);
   },

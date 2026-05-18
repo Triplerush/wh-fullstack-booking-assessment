@@ -5,8 +5,8 @@ import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
 import { z } from "zod";
 
-import { TextInput } from "../components/forms/TextInput";
 import { FormError } from "../components/forms/FormError";
+import { TextInput } from "../components/forms/TextInput";
 import { useAuth } from "../context/AuthContext";
 import { applyDrfErrorsToForm } from "../utils/apiErrors";
 
@@ -63,44 +63,43 @@ export function RegisterPage() {
   }
 
   return (
-    <section style={{ maxWidth: 480, margin: "0 auto" }}>
-      <h2 style={{ marginBottom: "var(--space-5)" }}>{t("auth.register.title")}</h2>
-      <form onSubmit={handleSubmit(onSubmit)} noValidate>
-        <TextInput
-          label={t("auth.email")}
-          type="email"
-          autoComplete="email"
-          {...register("email")}
-          error={errors.email?.message}
-        />
-        <TextInput
-          label={t("auth.password")}
-          type="password"
-          autoComplete="new-password"
-          {...register("password")}
-          error={errors.password?.message}
-        />
-        <TextInput
-          label={t("auth.fullName")}
-          autoComplete="name"
-          {...register("full_name")}
-          error={errors.full_name?.message}
-        />
-        <TextInput
-          label={t("auth.nationality")}
-          {...register("nationality")}
-          error={errors.nationality?.message}
-        />
-        <div style={{ display: "flex", gap: "var(--space-3)" }}>
-          <div style={{ flex: "0 0 110px" }}>
+    <div className="form-page solo">
+      <section>
+        <h1 className="form-title">{t("auth.register.title")}</h1>
+        <p className="form-intro">{t("auth.register.intro")}</p>
+        <form onSubmit={handleSubmit(onSubmit)} noValidate>
+          <TextInput
+            label={t("auth.email")}
+            type="email"
+            autoComplete="email"
+            {...register("email")}
+            error={errors.email?.message}
+          />
+          <TextInput
+            label={t("auth.password")}
+            type="password"
+            autoComplete="new-password"
+            {...register("password")}
+            error={errors.password?.message}
+          />
+          <TextInput
+            label={t("auth.fullName")}
+            autoComplete="name"
+            {...register("full_name")}
+            error={errors.full_name?.message}
+          />
+          <TextInput
+            label={t("auth.nationality")}
+            {...register("nationality")}
+            error={errors.nationality?.message}
+          />
+          <div className="form-grid">
             <TextInput
               label={t("auth.phoneCountry")}
               placeholder="+34"
               {...register("phone_country_code")}
               error={errors.phone_country_code?.message}
             />
-          </div>
-          <div style={{ flex: 1 }}>
             <TextInput
               label={t("auth.phoneNumber")}
               inputMode="numeric"
@@ -108,34 +107,29 @@ export function RegisterPage() {
               error={errors.phone_number?.message}
             />
           </div>
-        </div>
-        <TextInput
-          label={t("auth.birthDate")}
-          type="date"
-          {...register("birth_date")}
-          error={errors.birth_date?.message}
-        />
-        <FormError>{banner}</FormError>
-        <button
-          type="submit"
-          disabled={isSubmitting}
-          style={{
-            marginTop: "var(--space-4)",
-            padding: "var(--space-3) var(--space-5)",
-            minHeight: "44px",
-            background: "var(--color-brand)",
-            color: "#fff",
-            border: 0,
-            borderRadius: "var(--radius-sm)",
-            cursor: "pointer",
-          }}
-        >
-          {isSubmitting ? t("auth.submitting") : t("auth.register.submit")}
-        </button>
-      </form>
-      <p style={{ marginTop: "var(--space-4)" }}>
-        {t("auth.register.hasAccount")} <Link to="/login">{t("nav.login")}</Link>
-      </p>
-    </section>
+          <TextInput
+            label={t("auth.birthDate")}
+            type="date"
+            {...register("birth_date")}
+            error={errors.birth_date?.message}
+          />
+          <FormError>{banner}</FormError>
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="btn btn-block"
+            style={{ marginTop: 16 }}
+          >
+            {isSubmitting ? t("auth.submitting") : t("auth.register.submit")}
+          </button>
+        </form>
+        <p style={{ marginTop: 24, fontSize: 13 }}>
+          {t("auth.register.hasAccount")}{" "}
+          <Link to="/login" style={{ fontWeight: 800, textDecoration: "underline" }}>
+            {t("nav.login")}
+          </Link>
+        </p>
+      </section>
+    </div>
   );
 }

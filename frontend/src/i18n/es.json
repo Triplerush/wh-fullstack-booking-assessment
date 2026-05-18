@@ -1,34 +1,107 @@
 {
-  "app": { "title": "Wind Homes" },
+  "app": { "title": "Wind Homes", "tagline": "Estancias curadas" },
   "nav": {
     "login": "Iniciar sesión",
-    "register": "Registrarse",
+    "register": "Crear cuenta",
     "logout": "Cerrar sesión",
     "myBookings": "Mis reservas",
     "greeting": "Hola, {{name}}",
     "search": "Buscar",
     "home": "Inicio"
   },
-  "footer": { "tagline": "Alquileres con alma." },
+  "footer": {
+    "tagline": "Alquileres con alma. Estancias largas y cortas, curadas a mano.",
+    "destinations": { "title": "Destinos" },
+    "discover": {
+      "title": "Descubrir",
+      "collection": "The Collection",
+      "casa": "Casa Wind",
+      "benefits": "Programa de beneficios"
+    },
+    "services": {
+      "title": "Servicios",
+      "longStays": "Grupos & largas estadías",
+      "events": "Eventos & producciones",
+      "guides": "Guías"
+    },
+    "help": {
+      "title": "Términos y condiciones",
+      "faq": "Preguntas frecuentes",
+      "terms": "Términos de servicio",
+      "privacy": "Políticas de privacidad"
+    },
+    "about": {
+      "title": "Nosotros",
+      "who": "¿Quiénes somos?",
+      "blog": "Blog & noticias",
+      "careers": "Trabaja con nosotros"
+    },
+    "contact": {
+      "title": "Contáctanos",
+      "email": "hola@wind-homes.test",
+      "phone": "+34 900 000 000",
+      "whatsapp": "WhatsApp: +34 600 000 000"
+    },
+    "social": { "title": "Síguenos" }
+  },
   "home": {
-    "title": "Wind Homes",
-    "subtitle": "Encuentra tu próximo alojamiento.",
-    "featured": "Destacados",
-    "noFeatured": "Aún no hay destacados."
+    "heroTitleA": "Home experience,",
+    "heroTitleB": "hotel quality",
+    "heroEyebrow": "The best of both worlds",
+    "featuredTitle": "Propiedades destacadas",
+    "featuredCopy": "Descubre nuestra selección de propiedades curadas en las mejores ciudades de España. Diseño, ubicación y servicio para que tu estancia sea memorable.",
+    "filterAll": "Todas",
+    "filterCollection": "The Collection",
+    "filterCasa": "Casa Wind",
+    "noFeatured": "Aún no hay destacados.",
+    "whyTitle": "Por qué viajar a España",
+    "whyEyebrow": "España",
+    "whyA": {
+      "title": "Cultura sin filtros",
+      "body": "Patrimonio milenario, ciudades vivas y barrios con identidad propia: de Madrid a Sevilla, cada parada es una historia distinta."
+    },
+    "whyB": {
+      "title": "Mediterráneo a tu ritmo",
+      "body": "Playas de Costa Brava, gastronomía local y un clima que invita a alargar la sobremesa cualquier día del año."
+    },
+    "whyC": {
+      "title": "Distancias cortas",
+      "body": "Trenes de alta velocidad y vuelos asequibles conectan los principales destinos en pocas horas, perfecto para combinar varias ciudades."
+    },
+    "whyD": {
+      "title": "Estancias diseñadas",
+      "body": "Nuestras casas se ubican en barrios donde se vive de verdad, con servicios pensados para que solo te ocupes de disfrutar."
+    },
+    "ctaTitle": "Alquileres a largo plazo",
+    "ctaCopy": "Descubre el confort y la conveniencia de hospedarte con nosotros durante periodos prolongados. Aprovecha nuestras tarifas especiales diseñadas exclusivamente para estadías largas, ofreciéndote una experiencia continua de calidad y comodidad.",
+    "ctaButton": "Contáctanos"
   },
   "search": {
-    "location": "Ubicación",
-    "allLocations": "Todas las ubicaciones",
+    "location": "Ciudad o destino",
+    "locationPlaceholder": "¿A dónde vas?",
+    "allLocations": "Todas las ciudades",
     "checkIn": "Llegada",
     "checkOut": "Salida",
     "guests": "Huéspedes",
+    "guestsPlaceholder": "2 huéspedes",
     "submit": "Buscar",
+    "viewList": "Ver como lista",
+    "viewGrid": "Ver como cuadrícula",
     "resultsCount": "{{count}} resultados",
-    "empty": "No encontramos propiedades con esos filtros."
+    "empty": "No encontramos propiedades con esos filtros.",
+    "filtersAll": "Todos",
+    "filtersTop": "Top picks",
+    "filtersWithPool": "Con piscina",
+    "filtersDesign": "Diseño"
   },
   "common": {
     "loading": "Cargando…",
-    "errorLoading": "No se pudo cargar."
+    "errorLoading": "No se pudo cargar.",
+    "networkError": "Sin conexión. Revisa tu red y vuelve a intentarlo.",
+    "serverError": "El servidor tuvo un problema. Inténtalo en un momento.",
+    "retry": "Reintentar",
+    "previous": "Anterior",
+    "next": "Siguiente"
   },
   "catalog": {
     "night": "noche",
@@ -44,14 +117,20 @@
     "capacity": "Capacidad",
     "amenities": "Amenidades",
     "location": "Ubicación",
-    "mapPlaceholder": "Mapa (próximamente)",
+    "mapPlaceholder": "Mapa (referencia)",
     "noAmenities": "Sin amenidades registradas.",
     "bookingComingSoon": "El flujo de reserva estará disponible en breve.",
     "checkAvailability": "Comprobar disponibilidad",
     "availabilityError": "No se pudo comprobar la disponibilidad.",
     "reserve": "Reservar",
     "notFound": "Propiedad no encontrada.",
-    "backToSearch": "Volver a la búsqueda"
+    "backToSearch": "Volver a la búsqueda",
+    "tabDaily": "Por noche",
+    "tabMonthly": "Por mes",
+    "monthlyDisabled": "(próximamente)",
+    "viewAll": "Ver todo",
+    "galleryTitle": "Galería",
+    "closeGallery": "Cerrar"
   },
   "checkout": {
     "title": "Confirmar y pagar",
@@ -73,14 +152,23 @@
     "dates": "Fechas",
     "nights": "Noches",
     "guests": "Huéspedes",
-    "total": "Total"
+    "total": "Total",
+    "summaryTitle": "Resumen de tu reserva"
   },
   "confirmation": {
     "title": "¡Reserva confirmada!",
     "intro": "Se ha enviado un email con los detalles a {{email}}.",
+    "greeting": "¡Hola!",
+    "greetingNamed": "¡Hola {{name}}!",
+    "thanks": "Gracias por elegir Wind Homes para tu próxima estadía",
+    "lead": "¡Ya estás listo para comenzar tu Wind Homes Experience!",
+    "bodyA": "Tu reserva ha sido confirmada y esperamos recibirte muy pronto. Previo a tu llegada recibirás en tu correo toda la información para el ingreso.",
+    "bodyB": "Hemos enviado los detalles a {{email}}. Si tienes alguna inquietud no dudes en comunicarte con nosotros.",
+    "summaryTitle": "Resumen de tu reserva",
     "code": "Código de reserva",
     "status": "Estado",
     "total": "Total",
+    "tagline": "HOME EXPERIENCE, HOTEL QUALITY",
     "goToMyBookings": "Ver mis reservas",
     "notFound": "No encontramos esa reserva."
   },
@@ -94,13 +182,19 @@
     "birthDate": "Fecha de nacimiento",
     "submitting": "Enviando…",
     "invalidCredentials": "Credenciales inválidas.",
+    "showPassword": "Mostrar contraseña",
+    "hidePassword": "Ocultar contraseña",
     "login": {
       "title": "Iniciar sesión",
+      "intro": "Accede para gestionar tus reservas.",
       "submit": "Entrar",
-      "noAccount": "¿Aún no tienes cuenta?"
+      "noAccount": "¿Aún no tienes cuenta?",
+      "inlineTitle": "Iniciar sesión",
+      "inlineIntro": "Si ya tienes cuenta, ingresa para reservar más rápido."
     },
     "register": {
       "title": "Crear cuenta",
+      "intro": "Necesitamos algunos datos para emitir tus reservas.",
       "submit": "Crear cuenta",
       "hasAccount": "¿Ya tienes cuenta?"
     }

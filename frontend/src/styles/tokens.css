@@ -1,19 +1,52 @@
 :root {
-  --color-brand: #1f3a5f;
-  --color-brand-accent: #c4a474;
-  --color-text: #1a1a1a;
-  --color-text-muted: #6b7280;
-  --color-surface: #ffffff;
-  --color-surface-alt: #f7f6f3;
-  --color-border: #e5e5e5;
-  --radius-sm: 4px;
-  --radius-md: 8px;
-  --radius-lg: 16px;
+  --color-black: #000000;
+  --color-ink: #000000;
+  --color-muted: #808080;
+  --color-line: #b3b3b3;
+  --color-paper: #ffffff;
+  --color-cream: #fafafa;
+  --color-cream-soft: #fafafa;
+  --color-aqua: #d2e3e8;
+  --color-aqua-strong: #d6eaee;
+  --color-aqua-soft: #eaecec;
+  --color-aqua-banner: #eff8f9;
+  --color-yellow: #feac00;
+  --color-yellow-soft: #fff8e5;
+  --color-purple: #7a3cff;
+  --color-red: #c82626;
+  --color-red-bg: #fff5f5;
+  --color-success: #2f8d3e;
+
+  /* Aliases semánticos */
+  --color-brand: var(--color-black);
+  --color-text: var(--color-ink);
+  --color-text-muted: var(--color-muted);
+  --color-surface: var(--color-paper);
+  --color-surface-alt: var(--color-cream-soft);
+  --color-border: var(--color-line);
+
+  /* Espaciado en escala compacta editorial */
   --space-1: 4px;
   --space-2: 8px;
   --space-3: 12px;
   --space-4: 16px;
   --space-5: 24px;
   --space-6: 32px;
-  --shadow-card: 0 4px 12px rgba(0, 0, 0, 0.06);
+  --space-7: 48px;
+  --space-8: 76px;
+
+  /* Radios discretos */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --radius-pill: 999px;
+
+  /* Sombras de tarjeta y modal */
+  --shadow-card: 0 14px 34px rgba(0, 0, 0, 0.08);
+  --shadow-modal: 0 18px 50px rgba(0, 0, 0, 0.16);
+
+  /* Anchos máximos comunes — calzados con el .container 1280px real */
+  --w-page: 1440px;
+  --w-content: 1280px;
+  --w-form: 1201px;
 }

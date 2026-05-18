@@ -1,0 +1,2650 @@
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-paper);
+}
+
+.app-shell main {
+  flex: 1;
+  width: 100%;
+}
+
+/* Sección "Por qué viajar a España": grid 1fr-2fr con eyebrow + titular a
+   la izquierda (Acumin 80px uppercase como .before-footer h2 del real) y
+   copy + columnas a la derecha. Tipografías del patrón real wynwood-house. */
+.why-spain {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 56px;
+  align-items: start;
+  max-width: var(--w-content);
+  margin: 0 auto;
+}
+
+.why-spain h2 {
+  margin: 8px 0 0;
+  font-family: var(--font-display);
+  font-size: clamp(40px, 6vw, 80px);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  word-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.why-spain .eyebrow {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--color-black);
+}
+
+.why-spain .why-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 36px 28px;
+}
+
+.why-spain .why-cols h3 {
+  margin: 0 0 10px;
+  font-family: var(--font-display);
+  font-size: 18px;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
+.why-spain .why-cols p {
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--color-black);
+  font-weight: 400;
+}
+
+/* Header */
+/* Patrón real wynwood-house.com: header sticky blanco, padding vertical 10px,
+   logo a la izquierda (142×37), bloque de acciones a la derecha con login y
+   selector de idioma estilo "ES / EN" con separadores. La sombra inferior
+   solo aparece cuando hay scroll (clase agregada por el shell). */
+.brand-header {
+  position: sticky;
+  z-index: 40;
+  top: 0;
+  min-height: 60px;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 28px;
+  padding: 10px 44px;
+  background: var(--color-paper);
+  box-shadow: 0 2px 7px rgba(0, 0, 0, 0.08);
+}
+
+.brand-header .header-left {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.brand-header .header-nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 42px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.brand-header .header-right {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 22px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.brand-header .header-right a,
+.brand-header .header-right button,
+.brand-header .header-nav a {
+  color: var(--color-black);
+}
+
+.brand-header .header-right .header-link {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.menu-burger {
+  width: 22px;
+  height: 16px;
+  display: inline-block;
+  background:
+    linear-gradient(var(--color-black), var(--color-black)) top/100% 2px no-repeat,
+    linear-gradient(var(--color-black), var(--color-black)) center/100% 2px no-repeat,
+    linear-gradient(var(--color-black), var(--color-black)) bottom/100% 2px no-repeat;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  color: var(--color-black);
+}
+
+.brand-logo {
+  display: block;
+  width: 142px;
+  height: 37px;
+  object-fit: contain;
+}
+
+.header-pill {
+  display: inline-flex;
+  align-items: center;
+  height: 38px;
+  padding: 0 22px;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--color-black);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+}
+
+.header-link {
+  font-weight: 700;
+}
+
+.lang-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+.lang-group button {
+  padding: 0 2px;
+  border: 0;
+  background: transparent;
+  color: var(--color-black);
+  font-weight: 400;
+  font-family: var(--font-body);
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+.lang-group button[aria-pressed="true"] {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  font-weight: 400;
+}
+
+.lang-group .sep {
+  color: var(--color-muted);
+  padding: 0 2px;
+}
+
+/* Footer */
+/* Fondo aqua como en el PNG de referencia (pie.png). Mantenemos la estructura
+   de tres zonas: brand-row con logo + redes, contact-banner sobre blanco para
+   que destaque sobre el aqua, columnas de enlaces grey y línea legal. */
+.footer {
+  display: block;
+  padding: 48px 48px 32px;
+  background: var(--color-aqua);
+  color: var(--color-black);
+}
+
+.footer-inner {
+  max-width: var(--w-content);
+  margin: 0 auto;
+}
+
+.footer-brand-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 16px 0 22px;
+}
+
+.footer-brand-row .footer-logo img {
+  display: block;
+  width: 100%;
+  max-width: 235px;
+  height: auto;
+}
+
+.footer-socials {
+  display: inline-flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.footer-socials a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  color: var(--color-black);
+  transition: opacity 120ms ease;
+}
+
+.footer-socials a:hover {
+  opacity: 0.7;
+}
+
+.footer-socials svg {
+  width: 22px;
+  height: 22px;
+  fill: var(--color-black);
+}
+
+.contact-banner {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 24px 24px;
+  margin: 24px 0;
+  background: var(--color-paper);
+  border-radius: var(--radius-md);
+}
+
+.contact-banner h3 {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 700;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--color-black);
+}
+
+.contact-banner-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.contact-banner-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 22px;
+  background: var(--color-aqua-banner);
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--color-black);
+  text-decoration: none;
+}
+
+.contact-banner-links a:hover {
+  opacity: 0.85;
+}
+
+.footer-columns {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 40px;
+  margin-top: 32px;
+  padding-top: 28px;
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.footer-columns h3 {
+  margin: 0 0 18px;
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 700;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--color-black);
+}
+
+.footer-columns a,
+.footer-columns p {
+  display: block;
+  margin: 0 0 12px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 400;
+  color: #3c4d50;
+  text-decoration: none;
+}
+
+.footer-columns a:hover {
+  opacity: 0.7;
+}
+
+.footer-legal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 24px;
+  margin-top: 24px;
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+  color: #3c4d50;
+  font-size: 13px;
+}
+
+/* Botones genéricos */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 22px;
+  border: 1px solid var(--color-black);
+  background: var(--color-black);
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 0;
+  transition: opacity 120ms ease;
+}
+
+.btn:disabled,
+.btn[aria-disabled="true"] {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.btn:not(:disabled):hover {
+  opacity: 0.88;
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--color-black);
+}
+
+.btn-yellow {
+  background: var(--color-yellow);
+  border-color: var(--color-yellow);
+  color: var(--color-black);
+}
+
+.btn-block {
+  width: 100%;
+  min-height: 50px;
+}
+
+.btn-pill {
+  border-radius: var(--radius-pill);
+  padding: 8px 18px;
+  min-height: 38px;
+}
+
+.icon-button {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #d7d2ca;
+  border-radius: 50%;
+  background: var(--color-paper);
+  font-weight: 900;
+}
+
+/* Tipografía */
+.display-xl {
+  font-family: var(--font-display);
+  font-size: clamp(44px, 6vw, 86px);
+  line-height: 0.92;
+  letter-spacing: -0.055em;
+  text-transform: uppercase;
+  font-weight: 900;
+}
+
+.display-lg {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 4vw, 46px);
+  line-height: 0.98;
+  letter-spacing: -0.05em;
+  text-transform: uppercase;
+  font-weight: 900;
+}
+
+.display-md {
+  font-family: var(--font-display);
+  font-size: 26px;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  text-transform: uppercase;
+  font-weight: 900;
+}
+
+.body-copy {
+  color: #555555;
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.eyebrow {
+  display: inline-block;
+  color: var(--color-black);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+}
+
+.muted {
+  color: var(--color-text-muted);
+}
+
+/* Secciones */
+.section {
+  padding: 76px 48px;
+}
+
+.section-tight {
+  padding: 36px 48px;
+}
+
+.section-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 28px;
+  margin-bottom: 26px;
+  flex-wrap: wrap;
+}
+
+.section-head .section-copy {
+  max-width: 440px;
+  color: #5d5d5d;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* Hero */
+/* Patrón real wynwood-house.com: min-height 80vh, imagen de fondo cubierta
+   con overlay gradient suave. Título "HOME EXPERIENCE, HOTEL QUALITY" 100px
+   en blanco centrado arriba y subtítulo letter-spacing 5px debajo. La barra
+   de búsqueda (new-hero-bellow) se ancla cerca del bottom centrada. */
+.hero {
+  position: relative;
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 250px 24px 60px;
+  color: #ffffff;
+  text-align: center;
+  background: #2a2a2a;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.3) 0%, rgba(28, 28, 28, 0.3) 11%, rgba(255, 255, 255, 0) 100%),
+    var(--hero-image, none) center/cover no-repeat;
+}
+
+.hero-copy {
+  position: relative;
+  z-index: 1;
+  max-width: 1100px;
+  margin-bottom: 50px;
+}
+
+.hero-copy h1 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(48px, 9vw, 100px);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  font-weight: 900;
+  text-shadow: 0 4px 22px rgba(0, 0, 0, 0.25);
+}
+
+.hero-copy .hero-sub {
+  display: block;
+  margin-top: 16px;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.36em;
+  text-transform: uppercase;
+}
+
+.hero-copy .eyebrow {
+  display: inline-block;
+  margin-bottom: 12px;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.5em;
+  text-transform: uppercase;
+  opacity: 0.92;
+}
+
+/* ----------------------------------------------- Search Card flotante */
+/* Patrón real wynwood-house.com: NO es una pill completa sino un rectángulo
+   con border-radius: 20px, fondo blanco translúcido 77%. 4 campos iguales
+   con bordes verticales 1px rgba(179,179,179) entre ellos, y un botón pill
+   negro 170×35 al final (margin-left 25px). */
+.search-card {
+  position: relative;
+  z-index: 2;
+  width: min(1201px, calc(100% - 48px));
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1.1fr auto;
+  align-items: stretch;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.77);
+  color: var(--color-black);
+  overflow: hidden;
+  padding: 0 14px 0 0;
+  text-align: left;
+}
+
+.search-card.inline {
+  align-self: stretch;
+  width: 100%;
+  margin: 24px 0 8px;
+  background: var(--color-paper);
+  box-shadow: 0 1px 0 #ebe7df inset;
+}
+
+.search-field {
+  min-height: 76px;
+  display: grid;
+  grid-template-columns: 22px 1fr;
+  gap: 10px;
+  align-items: center;
+  padding: 21px 24px 20px;
+  border-right: 1px solid rgb(179, 179, 179);
+  text-align: left;
+  transition: background-color 120ms ease;
+}
+
+.search-field:hover {
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.search-field:last-of-type {
+  border-right: 0;
+}
+
+.search-field .field-icon {
+  font-size: 16px;
+  color: var(--color-black);
+  opacity: 0.9;
+  line-height: 0;
+  min-width: 15px;
+}
+
+.search-field small {
+  display: block;
+  color: var(--color-black);
+  font-size: 12px;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.search-field input,
+.search-field select {
+  display: block;
+  width: 100%;
+  margin-top: 2px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--color-black);
+}
+
+.search-field input::placeholder {
+  color: #767676;
+  font-weight: 400;
+}
+
+.search-field input:focus-visible,
+.search-field select:focus-visible {
+  outline-offset: 1px;
+}
+
+/* Botón pill negro 170×35 a la derecha de la barra, con margin-left 25px,
+   tipografía Helvetica 14px uppercase. */
+.search-submit {
+  align-self: center;
+  margin: 6px 6px 6px 25px;
+  width: 170px;
+  height: 35px;
+  padding: 0 25px;
+  border: 0;
+  border-radius: 30px;
+  background: var(--color-black);
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 1em;
+  transition: background-color 120ms ease;
+}
+
+.search-submit:hover {
+  background: #2a2a2a;
+}
+
+/* ----------------------------------------------------- Destination grid */
+/* En el SVG el bloque tiene un eyebrow "DISCOVER OUR DESTINATIONS" en la
+   izquierda y un par de flechas circulares a la derecha; debajo, una fila
+   de 5 cards casi cuadradas con el nombre del país en grande sobre la
+   imagen, en blanco. */
+.destinations-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 22px;
+  margin-bottom: 22px;
+}
+
+.destinations-head .arrow-pair {
+  display: flex;
+  gap: 10px;
+}
+
+.destinations-head .arrow-pair button {
+  width: 38px;
+  height: 38px;
+  border: 1px solid #d7d2ca;
+  border-radius: 50%;
+  background: #fff;
+  font-weight: 900;
+  font-size: 14px;
+}
+
+.destination-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+}
+
+.destination-card {
+  position: relative;
+  height: 335px;
+  overflow: hidden;
+  color: #ffffff;
+  background: #333333;
+  text-decoration: none;
+}
+
+.destination-card .bg {
+  position: absolute;
+  inset: 0;
+  background: var(--image, none) center/cover no-repeat;
+}
+
+.destination-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 30%, rgba(0, 0, 0, 0.62));
+}
+
+.destination-card h3 {
+  position: absolute;
+  z-index: 1;
+  left: 20px;
+  bottom: 24px;
+  font-size: 28px;
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+}
+
+/* -------------------------------------------------------------- Pill row */
+/* Patrón real .btn-property de wynwood-house.com: chip aqua rectangular con
+   radius 7px, padding 6px 19px, altura 32px. Estado activo en negro y texto
+   blanco. NO es una pill completa. */
+.pill-row {
+  display: flex;
+  justify-content: center;
+  gap: 0;
+  margin-bottom: 26px;
+  flex-wrap: wrap;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  height: 32px;
+  border: 0;
+  border-radius: 7px;
+  background: var(--color-aqua);
+  padding: 6px 19px;
+  margin-right: 16px;
+  color: var(--color-black);
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+  cursor: pointer;
+}
+
+.pill.active {
+  background: var(--color-black);
+  color: #ffffff;
+}
+
+/* --------------------------------------------------- Featured (split heading) */
+/* Patrón real wynwood-house.com: col-sm-5 (5/12) + col-sm-7 (7/12). Título
+   "PROPIEDADES DESTACADAS" en cfont (Acumin uppercase) 40px, copy Helvetica
+   14px con max-width 380px aprox. */
+.featured-split {
+  display: grid;
+  grid-template-columns: 5fr 7fr;
+  gap: 30px;
+  align-items: start;
+  max-width: var(--w-content);
+  margin: 0 auto;
+}
+
+.featured-split .featured-intro h2 {
+  margin: 0 0 18px;
+  font-family: var(--font-display);
+  font-size: clamp(34px, 4vw, 40px);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+.featured-split .featured-intro p {
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.55;
+  font-weight: 400;
+  color: var(--color-black);
+  max-width: 420px;
+}
+
+/* Grid de cards en 1 sola fila de 2 columnas (2x1) con texto SOBRE imagen
+   y overlay rgba(0,0,0,0.45) full; info inferior a 19px del borde
+   (patrón real .property-content). El JSX limita a 2 elementos para que
+   solo aparezca una fila. */
+.property-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.property-card {
+  position: relative;
+  display: block;
+  height: 395px;
+  background: #1a1a1a;
+  color: #fff;
+  text-decoration: none;
+  overflow: hidden;
+}
+
+.property-card img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 4s ease-in-out;
+}
+
+.property-card:hover img {
+  transform: scale(1.04);
+}
+
+.property-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+}
+
+.property-card .property-info {
+  position: absolute;
+  z-index: 1;
+  left: 15px;
+  right: 15px;
+  bottom: 19px;
+  top: auto;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto auto;
+  align-content: end;
+  gap: 5px 14px;
+  color: #fff;
+  padding: 0;
+}
+
+.property-card .property-info .property-title {
+  grid-column: 1;
+  grid-row: 1;
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.2;
+  letter-spacing: 0;
+  text-transform: none;
+  font-weight: 400;
+  color: #fff;
+}
+
+.property-card .property-info .property-capacity {
+  grid-column: 2;
+  grid-row: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.property-card .property-info .property-capacity svg {
+  width: 12px;
+  height: 12px;
+  fill: #fff;
+}
+
+.property-card .property-info .property-price {
+  grid-column: 1;
+  grid-row: 2;
+  margin: 0;
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.property-card .property-info .property-price strong {
+  font-weight: 700;
+}
+
+.property-card .property-info .property-price small {
+  margin-left: 6px;
+  font-weight: 400;
+}
+
+.property-card .property-info .property-zone {
+  grid-column: 2;
+  grid-row: 2;
+  color: rgb(182, 182, 182);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 400;
+  text-align: right;
+}
+
+/* --------------------------------------------------- Alquileres largo plazo */
+/* Patrón real wynwood-house.com: imagen vertical 405×536 + copy con
+   margin-left 120px, h2 cfont 42px uppercase, copy Helvetica 14px width
+   542px, CTA pill negro 36px radius. */
+.long-stay {
+  display: flex;
+  align-items: center;
+  gap: 65px;
+  padding: 100px 48px;
+  background: var(--color-paper);
+  max-width: var(--w-content);
+  margin: 0 auto;
+}
+
+.long-stay-image {
+  position: relative;
+  flex-shrink: 0;
+  width: 405px;
+  max-width: 50%;
+  height: 536px;
+  background: rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+.long-stay-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 4s ease-in-out;
+}
+
+.long-stay-image:hover img {
+  transform: scale(1.04);
+}
+
+.long-stay-copy {
+  margin-left: 0;
+  max-width: 560px;
+}
+
+.long-stay-copy h2 {
+  margin: 0 0 18px;
+  font-family: var(--font-display);
+  font-size: 42px;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.long-stay-copy p {
+  margin: 0 0 28px;
+  color: var(--color-black);
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.55;
+  font-weight: 400;
+  max-width: 542px;
+}
+
+.long-stay-copy .btn {
+  display: inline-flex;
+  align-items: center;
+  height: 36px;
+  border-radius: 36px;
+  padding: 8px 20px;
+  background: var(--color-black);
+  border-color: var(--color-black);
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* ============================================================= SearchPage */
+/* Patrón real wynwood-house.com /madrid-espana/: barra de filtros sticky con
+   sombra (.shadowed) y dos paneles (.search-content): list 7/12 + map 5/12.
+   Lista en 2 columnas de cards verticales con thumbnail 380px y bloque
+   inferior título + zona + precio + capacidades. */
+.search-filters-bar {
+  position: sticky;
+  top: 60px;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  padding: 14px 48px;
+  background: var(--color-paper);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.search-filters-bar .filter-field {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-width: 140px;
+  padding: 4px 24px 6px 0;
+  border-bottom: 1px solid var(--color-black);
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--color-black);
+  background: transparent;
+  cursor: pointer;
+  line-height: 1.1;
+}
+
+.search-filters-bar .filter-field::after {
+  content: "+";
+  position: absolute;
+  right: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 16px;
+  color: var(--color-black);
+}
+
+.search-filters-bar select.filter-field,
+.search-filters-bar input.filter-field {
+  border: 0;
+  border-bottom: 1px solid var(--color-black);
+  border-radius: 0;
+  background: transparent;
+  -webkit-appearance: none;
+  appearance: none;
+  padding: 4px 28px 6px 0;
+  width: 180px;
+}
+
+.search-filters-bar select.filter-field {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24'><path fill='%23000' d='M5 9h14l-7 7z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 6px center;
+}
+
+/* Botón a la izquierda de la barra que cambia la disposición de las cards
+   entre grid (2 columnas, default) y list (1 columna horizontal). Es un
+   botón independiente — NO un decorador del filtro de ciudad. */
+.view-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 28px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.view-toggle img {
+  width: 44px;
+  height: 28px;
+  display: block;
+}
+
+.view-toggle:hover {
+  opacity: 0.75;
+}
+
+.search-content {
+  display: block;
+}
+
+.search-results {
+  padding: 28px 48px 80px;
+  max-width: var(--w-content);
+  margin: 0 auto;
+}
+
+.search-results-showing {
+  margin: 0 0 20px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-muted);
+  letter-spacing: 0.02em;
+}
+
+/* Contenedor fijo de 2 columnas que SIEMPRE ocupa el alto de 4 cards (2x2),
+   tanto si la búsqueda devuelve 0, 1, 3 ó 12 resultados. Las filas faltantes
+   quedan en blanco; los resultados que sobrepasen 4 aparecen al hacer
+   scroll vertical dentro del contenedor. */
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  /* 2 filas explícitas siempre presentes; las extras (5ª en adelante) usan
+     grid-auto-rows con la misma altura y se acceden vía scroll. */
+  grid-template-rows: repeat(2, 420px);
+  grid-auto-rows: 420px;
+  gap: 42px 22px;
+  height: 882px;
+  overflow-y: auto;
+  padding-right: 8px;
+  scrollbar-gutter: stable;
+}
+
+.results-grid .room-card {
+  height: 420px;
+}
+
+.results-grid::-webkit-scrollbar {
+  width: 6px;
+}
+
+.results-grid::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+}
+
+/* Tarjeta de resultado al patrón real .search-room-item: imagen 380px arriba,
+   abajo título 16px + zona 14px grey + fila precio (con underline) + chips
+   de capacidad y habitaciones. */
+.room-card {
+  display: block;
+  color: var(--color-black);
+  text-decoration: none;
+}
+
+.room-card .room-card-thumb {
+  position: relative;
+  height: 300px;
+  background: #1a1a1a;
+  overflow: hidden;
+}
+
+.room-card .room-card-thumb img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 320ms ease;
+}
+
+.room-card .room-card-thumb img.active {
+  opacity: 1;
+}
+
+/* Flechas del carrusel sobre la imagen, solo visibles al hover. */
+.room-card .carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--color-black);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 180ms ease;
+  z-index: 2;
+}
+
+.room-card:hover .carousel-arrow {
+  opacity: 1;
+}
+
+.room-card .carousel-arrow.prev {
+  left: 12px;
+}
+
+.room-card .carousel-arrow.next {
+  right: 12px;
+}
+
+/* Indicadores de slide (dots) abajo de la imagen, también solo en hover. */
+.room-card .carousel-dots {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  opacity: 0;
+  transition: opacity 180ms ease;
+  z-index: 2;
+}
+
+.room-card:hover .carousel-dots {
+  opacity: 1;
+}
+
+.room-card .carousel-dots span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.room-card .carousel-dots span.active {
+  background: #fff;
+}
+
+.room-card .room-card-title {
+  margin: 14px 0 0;
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.1;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--color-black);
+  min-height: 30px;
+  display: flex;
+  align-items: end;
+}
+
+.room-card .room-card-zone {
+  margin: 2px 0 0;
+  color: rgb(173, 173, 173);
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.room-card .room-card-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 10px;
+  font-family: var(--font-body);
+  font-size: 14px;
+}
+
+.room-card .room-card-price {
+  text-decoration: underline;
+  color: var(--color-black);
+}
+
+.room-card .room-card-spaces {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--color-black);
+}
+
+.room-card .room-card-spaces>span+span::before {
+  content: "";
+  display: inline-block;
+  width: 1px;
+  height: 10px;
+  vertical-align: middle;
+  background: var(--color-black);
+  margin: 0 12px 1px 0;
+}
+
+.room-card .room-card-spaces svg {
+  width: 12px;
+  height: 12px;
+  fill: var(--color-black);
+  margin-left: 4px;
+  vertical-align: -1px;
+}
+
+/* Modo lista: la grid se colapsa a 1 columna y cada card pasa a layout
+   horizontal con thumbnail a la izquierda y bloque de info a la derecha.
+   Conserva el max-height del contenedor padre para que el área de scroll
+   se mantenga estable entre modos. */
+.results-grid.is-list {
+  grid-template-columns: 1fr;
+  /* Mismo principio: 4 filas explícitas siempre presentes (260 px cada una)
+     + scroll cuando hay más. La altura total resultante coincide con la
+     del modo grid para que la página no salte al cambiar de vista. */
+  grid-template-rows: repeat(4, 260px);
+  grid-auto-rows: 260px;
+  gap: 28px;
+  height: 1124px;
+}
+
+.results-grid.is-list .room-card {
+  height: 260px;
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 24px;
+  align-items: center;
+}
+
+.results-grid.is-list .room-card .room-card-thumb {
+  height: 240px;
+}
+
+.results-grid.is-list .room-card .room-card-title {
+  margin-top: 0;
+  font-size: 22px;
+  min-height: auto;
+}
+
+.results-grid.is-list .room-card .room-card-bottom {
+  margin-top: 16px;
+}
+
+.pagination {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 36px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 400;
+}
+
+/* ============================================================ Detail page */
+/* Patrón real wynwood-house: .room-page con galería horizontal a sangre,
+   debajo bloque de contenido (7 cols) + .booking-box pegado (4 cols con
+   offset 1). HR negros de 1px separan títulos, room-spaces con divisor
+   vertical de 1px×8px entre items. */
+.room-page {
+  background: var(--color-paper);
+  padding-bottom: 70px;
+}
+
+.room-page .container {
+  max-width: var(--w-content);
+  margin: 0 auto;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+.breadcrumb {
+  margin: 18px 0 16px;
+  color: #777777;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.breadcrumb a {
+  color: inherit;
+}
+
+/* ---------------------------------------------------- Horizontal gallery */
+.horizontal-gallery {
+  position: relative;
+  /* overflow:hidden corta cualquier hijo que intente salirse de los 500px
+     (placeholders SVG, imágenes con viewBox raro, etc) y evita que la
+     galería se solape con el .detail-body que viene debajo. */
+  overflow: hidden;
+  margin-bottom: 64px;
+  z-index: 0;
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 10px;
+  height: 500px;
+  min-height: 500px;
+}
+
+.gallery-main,
+.gallery-cell {
+  position: relative;
+  overflow: hidden;
+  background: #ddd8cf;
+}
+
+.gallery-main img,
+.gallery-cell img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.gallery-main {
+  height: 500px;
+}
+
+.gallery-side {
+  display: grid;
+  grid-template-rows: repeat(2, 1fr);
+  gap: 10px;
+  height: 500px;
+}
+
+.gallery-cell {
+  height: 100%;
+  min-height: 0;
+}
+
+/* Botón "Ver todo" estilo wynwood, abre la galería completa. */
+.gallery-view-all {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 30px;
+  background: rgb(255, 251, 242);
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  color: var(--color-black);
+  font-size: 13px;
+  font-weight: 700;
+  font-family: var(--font-body);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.gallery-view-all svg {
+  width: 18px;
+  height: auto;
+}
+
+/* Grid completa que se muestra en el lightbox al pulsar "Ver todo". */
+.full-gallery-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--color-paper);
+  overflow-y: auto;
+  z-index: 1000;
+  padding: 24px 36px 64px;
+}
+
+.full-gallery-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0 18px;
+}
+
+.full-gallery-header h2 {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 20px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.close-gallery-btn {
+  background: var(--color-black);
+  color: #fff;
+  border: 0;
+  border-radius: 50px;
+  padding: 8px 18px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.full-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 12px;
+}
+
+.full-gallery-grid img {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+}
+
+/* -------------------------------------------------------- Detail body */
+/* Layout en 2 columnas SÓLO debajo de la galería. La galería está en su
+   propia section a sangre (.horizontal-gallery), así el .booking-box
+   sticky arranca recién en esta fila y nunca se solapa visualmente con
+   las imágenes. */
+.detail-body {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
+  gap: 56px;
+  align-items: start;
+  padding-top: 16px;
+  /* z-index + background blindan al .detail-body para que jamás quede
+     debajo de la galería ni del header sticky, aunque algo más arriba
+     intente solaparse. */
+  position: relative;
+  z-index: 1;
+  background: var(--color-paper);
+  clear: both;
+}
+
+.detail-main h1.detail-title {
+  font-family: var(--font-display);
+  font-size: clamp(44px, 6vw, 72px);
+  line-height: 0.85;
+  letter-spacing: 0;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.room-neighboardhood {
+  margin: 14px 0 0;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-black);
+}
+
+/* Fila de capacidades con divisor vertical 1px entre items, como wynwood. */
+.room-spaces {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 18px 0 0;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.room-spaces>span {
+  display: inline-flex;
+  align-items: center;
+}
+
+.room-spaces>span+span::before {
+  content: "";
+  display: inline-block;
+  width: 1px;
+  height: 8px;
+  background: var(--color-black);
+  margin: 0 12px;
+  vertical-align: middle;
+}
+
+.room-spaces strong {
+  font-weight: 800;
+  margin-right: 6px;
+}
+
+.detail-heading {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3vw, 40px);
+  text-transform: uppercase;
+  letter-spacing: 0;
+  line-height: 1;
+  margin: 56px 0 24px;
+}
+
+.detail-description {
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--color-black);
+  margin: 0;
+  white-space: pre-line;
+}
+
+/* ----------------------------------------------------------- Amenities */
+/* Patrón .amt-item-box real: icono grande centrado con label debajo. El
+   icono se elige a partir del slug que viene del backend (mapa estático
+   slug→SVG), no es un glifo genérico. */
+.amenity-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 32px 16px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.amenity {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--color-black);
+}
+
+.amenity-icon {
+  width: 56px;
+  height: 56px;
+  display: grid;
+  place-items: center;
+  color: var(--color-black);
+}
+
+.amenity-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.amenity-label {
+  min-height: 32px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+/* ---------------------------------------------------------- Map block */
+.map-placeholder {
+  height: 320px;
+  border-radius: 14px;
+  background:
+    repeating-linear-gradient(30deg, #cfe3de 0 20px, #e8ede2 20px 42px);
+  border: 1px solid var(--color-line);
+  display: grid;
+  place-items: center;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 800;
+  color: #2d4547;
+}
+
+/* ------------------------------------------------------- Booking box (right col) */
+/* Tarjeta de reserva en la columna derecha, en flujo normal (no sticky)
+   para que SIEMPRE quede debajo de la galería visualmente y nunca se
+   solape con ella al hacer scroll. En el MHTML real el sticky lo activa
+   JS tras un umbral de scroll; replicarlo con sólo CSS provoca solape
+   con las imágenes en el primer fold, así que lo dejamos estático. */
+.booking-box {
+  align-self: start;
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: rgba(0, 0, 0, 0.07) 0px 0px 16px 0px;
+}
+
+.booking-box .price-hero {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  margin: 0 0 10px;
+}
+
+.booking-box .price-hero small {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-muted);
+  letter-spacing: 0;
+}
+
+.booking-tabs {
+  display: flex;
+  gap: 18px;
+  margin: 8px 0 20px;
+  border: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.booking-tabs button {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  font-family: var(--font-display);
+  font-size: clamp(22px, 2.2vw, 32px);
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0;
+  color: var(--color-black);
+  cursor: pointer;
+}
+
+.booking-tabs button[aria-pressed="true"] {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.booking-tabs button[aria-disabled="true"] {
+  color: var(--color-muted);
+}
+
+/* Form-group con label arriba y campos con sólo border-bottom negro,
+   patrón .booking-form de wynwood (border-top 1px en el form). */
+.booking-form {
+  border-top: 1px solid var(--color-black);
+  margin-top: 10px;
+}
+
+.booking-form .form-group {
+  padding-top: 22px;
+  margin: 0;
+}
+
+.booking-form .form-group label {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--color-black);
+  margin: 0 0 4px;
+  line-height: 1;
+}
+
+.booking-form .form-group input,
+.booking-form .form-group .form-control {
+  width: 100%;
+  border: 0;
+  border-bottom: 1px solid var(--color-black);
+  border-radius: 0;
+  background: transparent;
+  height: auto;
+  padding: 6px 0;
+  font-family: var(--font-body);
+  font-size: 16px;
+  color: var(--color-black);
+  line-height: 1;
+  box-shadow: none;
+}
+
+.booking-form .form-group input:focus {
+  outline: none;
+  border-bottom-color: var(--color-aqua);
+}
+
+.booking-form .field-error {
+  color: #c0392b;
+  font-size: 12px;
+  margin-top: 4px;
+  font-weight: 700;
+}
+
+.btn-reserve {
+  display: block;
+  width: 100%;
+  margin-top: 26px;
+  padding: 14px 20px;
+  background: var(--color-black);
+  color: #fff;
+  border: 0;
+  border-radius: 36px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: background-color 0.15s ease, transform 0.05s ease;
+}
+
+.btn-reserve:hover:not(:disabled) {
+  background: #1c1c1c;
+}
+
+.btn-reserve:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.btn-reserve:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Variante prominente para el CTA final de "Reservar" cuando ya se verificó
+   disponibilidad: alto contraste con fondo aqua, mayor jerarquía visual. */
+.btn-reserve.btn-reserve-primary {
+  margin-top: 18px;
+  padding: 16px 22px;
+  background: var(--color-aqua);
+  color: var(--color-black);
+  font-size: 16px;
+  letter-spacing: 0.1em;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+.btn-reserve.btn-reserve-primary:hover:not(:disabled) {
+  background: #b7d2d9;
+}
+
+.booking-quote {
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid var(--color-line);
+}
+
+.summary-row,
+.total-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--color-line);
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.total-row {
+  border-bottom: 0;
+  padding-top: 14px;
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.summary-property {
+  display: grid;
+  grid-template-columns: 96px 1fr;
+  gap: 14px;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.summary-property .thumb {
+  width: 96px;
+  height: 96px;
+  background: var(--color-surface-alt);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.summary-property .thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.summary-property h3 {
+  margin: 0 0 4px;
+  font-size: 17px;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  text-transform: none;
+}
+
+.summary-property p {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 12px;
+}
+
+/* ================================================================ Forms */
+.form-page {
+  display: grid;
+  grid-template-columns: minmax(0, 700px) 398px;
+  gap: 56px;
+  max-width: var(--w-form);
+  margin: 0 auto;
+  padding: 48px 48px 80px;
+}
+
+.form-page.solo {
+  grid-template-columns: minmax(0, 560px);
+  justify-content: center;
+}
+
+.form-title {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 4vw, 44px);
+  line-height: 1;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.form-title.small {
+  margin-top: 40px;
+  padding-top: 32px;
+  border-top: 1px solid #e4e0d8;
+  font-size: 26px;
+  letter-spacing: 0.1em;
+}
+
+.form-intro {
+  margin: 10px 0 28px;
+  color: #1d1d1d;
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px 14px;
+}
+
+.form-grid .field-full {
+  grid-column: 1 / -1;
+}
+
+.field {
+  display: block;
+  margin-bottom: 14px;
+}
+
+.field-label {
+  display: block;
+  margin-bottom: 7px;
+  color: #5e5e5e;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.field-input,
+.field-select {
+  width: 100%;
+  min-height: 50px;
+  padding: 0 16px;
+  border: 1px solid #c9c9c9;
+  border-radius: 6px;
+  background: var(--color-paper);
+  font-size: 15px;
+  color: var(--color-ink);
+}
+
+.field-input.error,
+.field-select.error {
+  border-color: var(--color-red);
+  background: var(--color-red-bg);
+}
+
+.field-input:focus-visible,
+.field-select:focus-visible {
+  outline: 2px solid var(--color-black);
+  outline-offset: 1px;
+}
+
+.field-error {
+  margin: 6px 0 0;
+  color: var(--color-red);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.form-note {
+  padding: 14px 16px;
+  border-left: 4px solid var(--color-yellow);
+  background: var(--color-yellow-soft);
+  color: #5d4311;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.check-row {
+  display: grid;
+  grid-template-columns: 22px 1fr;
+  gap: 12px;
+  align-items: start;
+  margin: 20px 0;
+}
+
+.check-row input {
+  margin-top: 4px;
+}
+
+/* ----------------- Inline login / register switch (checkout) ----------------- */
+/* Wrapper que envuelve el TextInput de la contraseña para anclar el botón
+   ojo en la esquina derecha sobre el input, copiando el patrón
+   .password-wrapper + .toggle-button del MHTML real de login. */
+.password-wrapper {
+  position: relative;
+}
+
+.password-toggle {
+  position: absolute;
+  /* 38px desde abajo: alineado con el centro del input (ya que el
+     TextInput tiene label arriba + input ~46px alto). Ajusta si cambia
+     la altura del TextInput. */
+  right: 12px;
+  bottom: 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #979797;
+  cursor: pointer;
+}
+
+.password-toggle:hover {
+  color: var(--color-black);
+}
+
+.password-toggle svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Link para alternar entre login y register inline. Es un <button> con
+   apariencia de link para mantener accesibilidad de teclado. */
+.inline-auth-switch {
+  margin-top: 18px;
+  text-align: center;
+}
+
+.link-button {
+  display: inline;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--color-black);
+  cursor: pointer;
+}
+
+.link-button-strong {
+  font-weight: 800;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.payment-methods {
+  display: grid;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.payment-method {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 56px;
+  padding: 0 18px;
+  border: 1px solid var(--color-line);
+  background: var(--color-paper);
+  font-weight: 800;
+  text-decoration: none;
+  color: inherit;
+}
+
+/* ========================================================== Confirmation */
+/* Layout centrado de columna única, tomado de la captura de referencia:
+   saludo italic + eyebrow uppercase + imagen ancha + mensaje + bloque de
+   datos de la reserva + footer "HOME EXPERIENCE, HOTEL QUALITY". */
+.confirmation-page {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 56px 24px 80px;
+  text-align: center;
+  background: var(--color-paper);
+}
+
+/* Saludo grande tipo serif italic, "¡Hola!" o "¡Hola Adolfo!". Usamos
+   Georgia como fallback porque es serif estándar disponible en todos
+   los sistemas y se ve cercano al original. */
+.confirmation-greeting {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(38px, 4vw, 56px);
+  line-height: 1;
+  color: var(--color-black);
+}
+
+.confirmation-eyebrow {
+  margin: 18px 0 0;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--color-black);
+  line-height: 1.6;
+}
+
+.confirmation-image {
+  margin: 32px 0;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: 4px;
+  background: var(--color-surface-alt);
+}
+
+.confirmation-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.confirmation-lead {
+  margin: 28px 0 12px;
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-black);
+}
+
+.confirmation-body {
+  margin: 0 auto;
+  max-width: 500px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--color-black);
+}
+
+/* Línea separadora fina entre el bloque de mensaje y el de datos. */
+.confirmation-divider {
+  height: 1px;
+  background: var(--color-line);
+  margin: 40px 0;
+  border: 0;
+}
+
+/* Bloque de detalles de la reserva: título + dirección + fechas + tabla
+   con noches × precio y total. Alineado a la izquierda dentro del layout
+   centrado, como la captura. */
+.confirmation-details {
+  text-align: left;
+}
+
+.confirmation-details h2 {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0;
+  color: var(--color-black);
+  text-transform: none;
+}
+
+.confirmation-details .address,
+.confirmation-details .dates {
+  margin: 6px 0 0;
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--color-muted);
+}
+
+.confirmation-table {
+  width: 100%;
+  margin-top: 28px;
+  border-collapse: collapse;
+}
+
+.confirmation-table td {
+  padding: 8px 0;
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--color-black);
+}
+
+.confirmation-table td:last-child {
+  text-align: right;
+  font-weight: 600;
+}
+
+.confirmation-table .total td {
+  padding-top: 18px;
+  border-top: 1px solid var(--color-line);
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.confirmation-table .total td:last-child {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.confirmation-actions {
+  margin-top: 36px;
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+/* Footer del template: "HOME EXPERIENCE, HOTEL QUALITY" con tracking. */
+.confirmation-footer {
+  margin-top: 56px;
+  padding-top: 24px;
+  border-top: 1px solid var(--color-line);
+  font-family: var(--font-body);
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+/* =============================================================== Skeletons */
+.skel {
+  background: linear-gradient(110deg, #ece8e1 30%, #f5f1ea 50%, #ece8e1 70%);
+  background-size: 200% 100%;
+  animation: skeleton-pulse 1.4s ease-in-out infinite;
+}
+
+.skel-line {
+  height: 12px;
+  border-radius: 2px;
+}
+
+.skel-block {
+  border-radius: 4px;
+}
+
+/* ================================================================ Toasts */
+.toast-stack {
+  position: fixed;
+  z-index: 90;
+  bottom: 24px;
+  right: 24px;
+  display: grid;
+  gap: 10px;
+  width: min(360px, calc(100vw - 32px));
+}
+
+.toast {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 16px;
+  border-left: 4px solid var(--color-black);
+  background: var(--color-paper);
+  box-shadow: var(--shadow-card);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.toast.error {
+  border-left-color: var(--color-red);
+}
+
+.toast.success {
+  border-left-color: var(--color-success);
+}
+
+.toast button {
+  margin-left: auto;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font-size: 18px;
+  line-height: 1;
+  color: var(--color-muted);
+}
+
+/* ============================================================ My bookings */
+.bookings-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 18px;
+}
+
+.bookings-list li {
+  display: grid;
+  grid-template-columns: 140px 1fr auto;
+  gap: 18px;
+  align-items: center;
+  padding: 18px;
+  background: var(--color-paper);
+  border: 1px solid var(--color-line);
+}
+
+.bookings-list .thumb {
+  aspect-ratio: 1 / 1;
+  background: var(--color-surface-alt);
+  overflow: hidden;
+}
+
+.bookings-list .thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.bookings-list h3 {
+  margin: 0;
+  font-size: 18px;
+  letter-spacing: -0.03em;
+}
+
+.bookings-list .meta {
+  margin-top: 6px;
+  color: var(--color-muted);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.bookings-list .code {
+  margin-top: 4px;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 12px;
+  color: var(--color-muted);
+}
+
+.bookings-list .price {
+  font-family: var(--font-display);
+  font-size: 22px;
+  letter-spacing: -0.03em;
+}
+
+/* ================================================================ Responsive */
+@media (max-width: 1100px) {
+  .brand-header {
+    grid-template-columns: auto 1fr auto;
+    padding: 0 24px;
+    gap: 16px;
+  }
+
+  .brand-header .header-nav {
+    display: none;
+  }
+
+  .why-spain {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+
+  .why-spain .why-cols {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .section {
+    padding: 56px 24px;
+  }
+
+  .search-results {
+    padding: 24px 24px 60px;
+  }
+
+  .search-filters-bar {
+    padding: 12px 24px;
+    gap: 16px;
+  }
+
+  .results-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .results-grid.is-list .room-card {
+    grid-template-columns: 260px 1fr;
+    height: 220px;
+  }
+
+  .results-grid.is-list {
+    grid-template-rows: repeat(4, 220px);
+    grid-auto-rows: 220px;
+    height: 964px;
+  }
+
+  .detail-body {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .gallery {
+    height: 380px;
+  }
+
+  .amenity-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .form-page {
+    grid-template-columns: 1fr;
+    padding: 28px 24px 60px;
+    gap: 28px;
+  }
+
+  .featured-split {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .destination-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .property-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .long-stay {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding: 56px 24px;
+  }
+
+  .long-stay-image {
+    max-height: 380px;
+    aspect-ratio: 16 / 10;
+  }
+
+  .footer {
+    grid-template-columns: 1fr 1fr;
+    padding: 60px 24px 40px;
+  }
+}
+
+@media (max-width: 720px) {
+  .brand-header {
+    grid-template-columns: auto 1fr auto;
+    min-height: 60px;
+    padding: 0 16px;
+    gap: 8px;
+  }
+
+  .brand-header .header-left {
+    gap: 12px;
+    font-size: 12px;
+  }
+
+  .brand-header .header-right {
+    gap: 10px;
+    font-size: 12px;
+  }
+
+  .brand-header .header-right .header-link {
+    display: none;
+  }
+
+  .brand {
+    font-size: 20px;
+  }
+
+  .promo-line .countdown {
+    display: none;
+  }
+
+  .hero {
+    min-height: 0;
+    padding: 60px 16px 28px;
+  }
+
+  .hero-copy h1 {
+    font-size: 38px;
+  }
+
+  .search-card {
+    grid-template-columns: 1fr;
+    width: 100%;
+    border-radius: 16px;
+  }
+
+  .search-field {
+    border-right: 0;
+    border-bottom: 1px solid #e9e5de;
+    padding: 12px 18px;
+  }
+
+  .search-submit {
+    min-height: 52px;
+  }
+
+  .section {
+    padding: 48px 16px;
+  }
+
+  .section-tight {
+    padding: 24px 16px;
+  }
+
+  .destination-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .destination-card {
+    height: 220px;
+  }
+
+  .search-results {
+    padding: 18px 16px 48px;
+  }
+
+  .results-grid {
+    grid-template-columns: 1fr;
+    /* En móvil mostramos 2 cards visibles (1 col x 2 rows) y el resto va al
+       scroll interno; el área conserva siempre el tamaño de 4 cards. */
+    grid-template-rows: repeat(4, 360px);
+    grid-auto-rows: 360px;
+    gap: 28px;
+    height: 760px;
+  }
+
+  .results-grid .room-card {
+    height: 360px;
+  }
+
+  .results-grid.is-list .room-card {
+    grid-template-columns: 1fr;
+    height: 360px;
+  }
+
+  .results-grid.is-list {
+    grid-template-rows: repeat(4, 360px);
+    grid-auto-rows: 360px;
+    height: 1524px;
+  }
+
+  .room-card .room-card-thumb {
+    height: 240px;
+  }
+
+  .search-filters-bar {
+    padding: 10px 16px;
+    gap: 12px;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+  }
+
+  .search-filters-bar .filter-field {
+    min-width: 130px;
+    flex-shrink: 0;
+  }
+
+  .room-page .container {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .detail-body {
+    gap: 24px;
+  }
+
+  .gallery {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+
+  .gallery-main {
+    height: 280px;
+  }
+
+  .gallery-side {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    height: 160px;
+  }
+
+  .detail-main h1.detail-title {
+    font-size: 38px;
+  }
+
+  .amenity-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .booking-box {
+    padding: 22px;
+  }
+
+  .booking-tabs button {
+    font-size: 22px;
+  }
+
+  .gallery-cell {
+    min-height: 140px;
+  }
+
+  .gallery-main {
+    min-height: 240px;
+  }
+
+  .amenity-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .detail-title {
+    font-size: 30px;
+  }
+
+  .form-page {
+    padding: 20px 16px 48px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-title {
+    font-size: 26px;
+    letter-spacing: 0.04em;
+  }
+
+  .confirmation-page {
+    padding: 40px 16px 56px;
+  }
+
+  .confirmation-greeting {
+    font-size: 36px;
+  }
+
+  .confirmation-image {
+    margin: 24px 0;
+  }
+
+  .long-stay {
+    grid-template-columns: 1fr;
+    padding: 40px 20px;
+    gap: 24px;
+  }
+
+  .long-stay-image {
+    aspect-ratio: 4 / 3;
+    max-height: 300px;
+  }
+
+  .property-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .property-card {
+    height: 280px;
+  }
+
+  .why-spain .why-cols {
+    grid-template-columns: 1fr;
+  }
+
+  .footer {
+    grid-template-columns: 1fr;
+    gap: 22px;
+    padding: 40px 20px 32px;
+  }
+
+  .bookings-list li {
+    grid-template-columns: 1fr;
+  }
+
+  .bookings-list .price {
+    font-size: 18px;
+  }
+
+  .toast-stack {
+    left: 16px;
+    right: 16px;
+    width: auto;
+    bottom: 16px;
+  }
+}

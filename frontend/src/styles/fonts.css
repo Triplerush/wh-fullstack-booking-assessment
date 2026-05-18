@@ -1,7 +1,7 @@
 @font-face {
   font-family: "Acumin";
   src: url("../assets/fonts/Acumin.otf") format("opentype");
-  font-weight: 400 900;
+  font-weight: 400 950;
   font-style: normal;
   font-display: swap;
 }
@@ -15,19 +15,6 @@
 }
 
 :root {
-  --font-display: "Acumin", "Helvetica", system-ui, sans-serif;
+  --font-display: "Acumin", "Impact", "Arial Narrow", system-ui, sans-serif;
   --font-body: "Helvetica", system-ui, sans-serif;
-}
-
-body {
-  font-family: var(--font-body);
-  margin: 0;
-}
-
-h1,
-h2,
-h3,
-h4 {
-  font-family: var(--font-display);
-  margin: 0;
 }

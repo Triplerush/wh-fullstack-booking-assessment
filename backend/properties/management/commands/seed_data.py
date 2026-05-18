@@ -1,14 +1,9 @@
-"""Carga inicial de ubicaciones, amenidades, propiedades e imágenes de galería.
-
-Uso:
-  python manage.py seed_data --reset --properties 12
-
-Las imágenes se generan al vuelo con Pillow (color plano + etiqueta) para
-que el comando funcione sin conexión. Pasan por `PropertyImage.save()`,
-que las optimiza a WebP al lado máximo configurado.
-"""
 import io
 import random
+import socket
+import time
+import urllib.error
+import urllib.request
 from decimal import Decimal
 
 from django.contrib.auth import get_user_model
@@ -58,8 +53,107 @@ PROP_TITLES = [
 ]
 
 
-def _make_image_bytes(color_seed: int, label: str) -> ContentFile:
-    """Genera un PNG de 1600×1200 con un color plano y una etiqueta centrada."""
+CURATED_PHOTOS = [
+    # Lista curada de fotos públicas de Unsplash (CDN, sin auth requerido)
+    # con temática casa/departamento/interior, alineada al producto. Cada
+    # entrada es el `photo_id` que aparece en `https://images.unsplash.com/
+    # photo-<id>`. Verificadas individualmente como accesibles. Si Unsplash
+    # las retirara, el código cae a picsum y luego al placeholder PIL.
+    "1560448204-e02f11c3d0e2",
+    "1493809842364-78817add7ffb",
+    "1556909114-f6e7ad7d3136",
+    "1502672260266-1c1ef2d93688",
+    "1505691938895-1758d7feb511",
+    "1522708323590-d24dbb6b0267",
+    "1484101403633-562f891dc89a",
+    "1513584684374-8bab748fbf90",
+    "1545324418-cc1a3fa10c00",
+    "1554995207-c18c203602cb",
+    "1507089947368-19c1da9775ae",
+    "1540518614846-7eded433c457",
+    "1494526585095-c41746248156",
+    "1599809275671-b5942cabc7a2",
+    "1564013799919-ab600027ffc6",
+    "1502005229762-cf1b2da7c5d6",
+    "1503174971373-b1f69850bded",
+    "1567016432779-094069958ea5",
+    "1571508601891-ca5e7a713859",
+    "1631679706909-1844bbd07221",
+    "1600585154340-be6161a56a0c",
+    "1600210492486-724fe5c67fb0",
+    "1600596542815-ffad4c1539a9",
+    "1600607687939-ce8a6c25118c",
+    "1600566753190-17f0baa2a6c3",
+    "1600210491892-03d54c0aaf87",
+    "1600585154526-990dced4db0d",
+    "1502672023488-70e25813eb80",
+    "1505693416388-ac5ce068fe85",
+    "1493663284031-b7e3aefcae8e",
+    "1495433324511-bf8e92934d90",
+    "1586023492125-27b2c045efd7",
+    "1556228720-195a672e8a03",
+    "1567767292278-a4f21aa2d36e",
+    "1598928506311-c55ded91a20c",
+    "1605276374104-dee2a0ed3cd6",
+    "1567538096630-e0c55bd6374c",
+]
+
+
+def _fetch_url(url: str, timeout: float, retries: int) -> bytes | None:
+    """Helper genérico: descarga `url` con reintentos. Valida tamaño mínimo
+    para descartar respuestas raras (errores HTML, redirects vacíos, etc).
+    Envía un User-Agent de browser porque algunos CDNs (Unsplash en
+    particular) rechazan o rate-limitan el UA por defecto de urllib.
+    """
+    request = urllib.request.Request(
+        url,
+        headers={
+            "User-Agent": (
+                "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
+                "(KHTML, like Gecko) Chrome/124.0 Safari/537.36"
+            ),
+            "Accept": "image/jpeg,image/png,image/webp,image/*;q=0.8",
+        },
+    )
+    for attempt in range(retries):
+        try:
+            with urllib.request.urlopen(request, timeout=timeout) as resp:
+                data = resp.read()
+            if len(data) > 10_000:
+                return data
+        except (urllib.error.URLError, socket.timeout, TimeoutError):
+            time.sleep(0.5 * (attempt + 1))
+    return None
+
+
+def _fetch_curated(seed: str, timeout: float = 15.0, retries: int = 4) -> bytes | None:
+    """Toma una foto de la lista curada de Unsplash. El índice se deriva del
+    hash MD5 del seed para que la selección sea determinista (misma foto en
+    cada corrida) pero variada entre seeds distintos.
+    """
+    if not CURATED_PHOTOS:
+        return None
+    import hashlib
+
+    idx = int(hashlib.md5(seed.encode()).hexdigest(), 16) % len(CURATED_PHOTOS)
+    photo_id = CURATED_PHOTOS[idx]
+    url = (
+        f"https://images.unsplash.com/photo-{photo_id}"
+        f"?w=1600&q=80&auto=format&fit=crop"
+    )
+    return _fetch_url(url, timeout, retries)
+
+
+def _fetch_picsum(
+    seed: str, timeout: float = 6.0, retries: int = 3
+) -> bytes | None:
+    """Foto genérica de picsum (fallback temático más débil)."""
+    url = f"https://picsum.photos/seed/{seed}/1600/1200"
+    return _fetch_url(url, timeout, retries)
+
+
+def _make_placeholder_bytes(color_seed: int, label: str) -> bytes:
+    """Placeholder plano con etiqueta centrada, usado solo si no hay red."""
     rng = random.Random(color_seed)
     color = (rng.randint(40, 200), rng.randint(40, 200), rng.randint(40, 200))
     img = Image.new("RGB", (1600, 1200), color)
@@ -73,8 +167,24 @@ def _make_image_bytes(color_seed: int, label: str) -> ContentFile:
     draw.text(((1600 - tw) / 2, (1200 - th) / 2), label, fill=(255, 255, 255), font=font)
     buf = io.BytesIO()
     img.save(buf, format="PNG")
-    buf.seek(0)
-    return ContentFile(buf.getvalue(), name="seed.png")
+    return buf.getvalue()
+
+
+def _image_content(seed: str, color_seed: int, label: str) -> ContentFile:
+    """Devuelve contenido de imagen para `seed`.
+
+    Cascada de fuentes (de mejor a peor calidad temática):
+      1. Lista curada de Unsplash (interiores de casas/departamentos).
+      2. picsum.photos (fotos genéricas determinísticas).
+      3. Placeholder PIL plano (color sólido con label).
+    """
+    data = _fetch_curated(seed)
+    if data is not None:
+        return ContentFile(data, name=f"{seed}.jpg")
+    data = _fetch_picsum(seed)
+    if data is not None:
+        return ContentFile(data, name=f"{seed}.jpg")
+    return ContentFile(_make_placeholder_bytes(color_seed, label), name="seed.png")
 
 
 class Command(BaseCommand):
@@ -180,9 +290,13 @@ class Command(BaseCommand):
             )
             prop.amenities.set(rng.sample(amenities, k=rng.randint(3, 6)))
 
-            # 4 imágenes por propiedad; la primera es la portada
+            # 4 imágenes por propiedad; la primera es la portada. Cada seed
+            # combina el slug y el índice para obtener fotos distintas pero
+            # estables entre ejecuciones.
             prop.images.all().delete()
             for k in range(4):
+                seed_token = f"{slug}-{k + 1}"
+                content = _image_content(seed_token, i * 10 + k, f"{slug} {k + 1}")
                 img = PropertyImage(
                     property=prop,
                     alt_es=f"Foto {k + 1} de {title_es}",
@@ -190,9 +304,5 @@ class Command(BaseCommand):
                     order=k,
                     is_cover=(k == 0),
                 )
-                img.image.save(
-                    "seed.png",
-                    _make_image_bytes(i * 10 + k, f"{slug} {k + 1}"),
-                    save=False,
-                )
+                img.image.save(content.name, content, save=False)
                 img.save()

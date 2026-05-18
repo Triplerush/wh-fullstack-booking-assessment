@@ -2,9 +2,7 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
-import { TextInput } from "./TextInput";
-
-export function HeroSearch({ locations = [], compact = false }) {
+export function HeroSearch({ locations = [], inline = false }) {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [params] = useSearchParams();
@@ -41,75 +39,51 @@ export function HeroSearch({ locations = [], compact = false }) {
   return (
     <form
       onSubmit={onSubmit}
-      style={{
-        display: "grid",
-        gridTemplateColumns: compact
-          ? "repeat(auto-fit, minmax(160px, 1fr)) 130px"
-          : "repeat(auto-fit, minmax(200px, 1fr)) 150px",
-        gap: "var(--space-3)",
-        alignItems: "end",
-        padding: compact ? "var(--space-3)" : "var(--space-5)",
-        background: "var(--color-surface)",
-        border: "1px solid var(--color-border)",
-        borderRadius: "var(--radius-md)",
-        boxShadow: compact ? "none" : "var(--shadow-card)",
-      }}
+      className={`search-card${inline ? " inline" : ""}`}
+      role="search"
     >
-      <label style={{ display: "block" }}>
-        <span style={{ display: "block", marginBottom: "var(--space-1)", fontSize: "0.9rem" }}>
-          {t("search.location")}
+      <label className="search-field">
+        <span className="field-icon" aria-hidden="true">◎</span>
+        <span>
+          <small>{t("search.location")}</small>
+          <select value={form.location} onChange={update("location")}>
+            <option value="">{t("search.allLocations")}</option>
+            {locations.map((loc) => (
+              <option key={loc.id} value={loc.slug}>
+                {loc.name} · {loc.country}
+              </option>
+            ))}
+          </select>
         </span>
-        <select
-          value={form.location}
-          onChange={update("location")}
-          style={{
-            width: "100%",
-            padding: "var(--space-2) var(--space-3)",
-            border: "1px solid var(--color-border)",
-            borderRadius: "var(--radius-sm)",
-            minHeight: 44,
-            fontFamily: "inherit",
-          }}
-        >
-          <option value="">{t("search.allLocations")}</option>
-          {locations.map((loc) => (
-            <option key={loc.id} value={loc.slug}>
-              {loc.name} · {loc.country}
-            </option>
-          ))}
-        </select>
       </label>
-      <TextInput
-        label={t("search.checkIn")}
-        type="date"
-        value={form.check_in}
-        onChange={update("check_in")}
-      />
-      <TextInput
-        label={t("search.checkOut")}
-        type="date"
-        value={form.check_out}
-        onChange={update("check_out")}
-      />
-      <TextInput
-        label={t("search.guests")}
-        type="number"
-        min="1"
-        value={form.guests}
-        onChange={update("guests")}
-      />
-      <button
-        type="submit"
-        style={{
-          padding: "var(--space-3) var(--space-4)",
-          minHeight: 44,
-          background: "var(--color-brand)",
-          color: "#fff",
-          border: 0,
-          borderRadius: "var(--radius-sm)",
-          cursor: "pointer",
-        }}
-      >
+      <label className="search-field">
+        <span className="field-icon" aria-hidden="true">◴</span>
+        <span>
+          <small>{t("search.checkIn")}</small>
+          <input type="date" value={form.check_in} onChange={update("check_in")} />
+        </span>
+      </label>
+      <label className="search-field">
+        <span className="field-icon" aria-hidden="true">◵</span>
+        <span>
+          <small>{t("search.checkOut")}</small>
+          <input type="date" value={form.check_out} onChange={update("check_out")} />
+        </span>
+      </label>
+      <label className="search-field">
+        <span className="field-icon" aria-hidden="true">☻</span>
+        <span>
+          <small>{t("search.guests")}</small>
+          <input
+            type="number"
+            min="1"
+            value={form.guests}
+            onChange={update("guests")}
+            placeholder={t("search.guestsPlaceholder")}
+          />
+        </span>
+      </label>
+      <button type="submit" className="search-submit">
         {t("search.submit")}
       </button>
     </form>

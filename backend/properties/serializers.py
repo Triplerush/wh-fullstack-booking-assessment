@@ -66,6 +66,7 @@ class PropertyListSerializer(serializers.ModelSerializer):
     title = LocalizedField("title")
     location = LocationSerializer(read_only=True)
     cover_image = CoverImageField()
+    gallery = serializers.SerializerMethodField()
 
     class Meta:
         model = Property
@@ -84,7 +85,12 @@ class PropertyListSerializer(serializers.ModelSerializer):
             "currency",
             "is_featured",
             "cover_image",
+            "gallery",
         )
+
+    def get_gallery(self, prop):
+        images = sorted(prop.images.all(), key=lambda i: (not i.is_cover, i.order))[:5]
+        return PropertyImageSerializer(images, many=True, context=self.context).data
 
 
 class PropertyDetailSerializer(PropertyListSerializer):

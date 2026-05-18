@@ -57,19 +57,9 @@ export function InlineRegisterForm({ onSuccess }) {
   }
 
   return (
-    <section
-      style={{
-        padding: "var(--space-4)",
-        border: "1px solid var(--color-border)",
-        borderRadius: "var(--radius-md)",
-        background: "var(--color-surface)",
-        marginBottom: "var(--space-5)",
-      }}
-    >
-      <h3 style={{ marginBottom: "var(--space-2)" }}>{t("checkout.guest.title")}</h3>
-      <p style={{ color: "var(--color-text-muted)", marginBottom: "var(--space-3)" }}>
-        {t("checkout.guest.subtitle")}
-      </p>
+    <section style={{ marginBottom: 28 }}>
+      <h2 className="form-title small">{t("checkout.guest.title")}</h2>
+      <p className="form-intro">{t("checkout.guest.subtitle")}</p>
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <TextInput
           label={t("auth.email")}
@@ -96,23 +86,19 @@ export function InlineRegisterForm({ onSuccess }) {
           {...register("nationality")}
           error={errors.nationality?.message}
         />
-        <div style={{ display: "flex", gap: "var(--space-3)" }}>
-          <div style={{ flex: "0 0 110px" }}>
-            <TextInput
-              label={t("auth.phoneCountry")}
-              placeholder="+34"
-              {...register("phone_country_code")}
-              error={errors.phone_country_code?.message}
-            />
-          </div>
-          <div style={{ flex: 1 }}>
-            <TextInput
-              label={t("auth.phoneNumber")}
-              inputMode="numeric"
-              {...register("phone_number")}
-              error={errors.phone_number?.message}
-            />
-          </div>
+        <div className="form-grid">
+          <TextInput
+            label={t("auth.phoneCountry")}
+            placeholder="+34"
+            {...register("phone_country_code")}
+            error={errors.phone_country_code?.message}
+          />
+          <TextInput
+            label={t("auth.phoneNumber")}
+            inputMode="numeric"
+            {...register("phone_number")}
+            error={errors.phone_number?.message}
+          />
         </div>
         <TextInput
           label={t("auth.birthDate")}
@@ -124,16 +110,8 @@ export function InlineRegisterForm({ onSuccess }) {
         <button
           type="submit"
           disabled={isSubmitting}
-          style={{
-            marginTop: "var(--space-3)",
-            padding: "var(--space-3) var(--space-5)",
-            minHeight: 44,
-            background: "var(--color-brand)",
-            color: "#fff",
-            border: 0,
-            borderRadius: "var(--radius-sm)",
-            cursor: "pointer",
-          }}
+          className="btn btn-block"
+          style={{ marginTop: 12 }}
         >
           {isSubmitting ? t("auth.submitting") : t("checkout.guest.submit")}
         </button>
