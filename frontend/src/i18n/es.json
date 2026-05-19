@@ -103,6 +103,20 @@
     "previous": "Anterior",
     "next": "Siguiente"
   },
+  "validation": {
+    "required": "Requerido",
+    "email": "Email inválido",
+    "passwordMin": "Mínimo 8 caracteres",
+    "passwordLetter": "Debe incluir una letra",
+    "passwordDigit": "Debe incluir un dígito",
+    "phoneCountry": "Formato: +34",
+    "phoneNumber": "Solo dígitos (6–15)",
+    "birthDate": "Formato AAAA-MM-DD",
+    "cardNumber": "Número de tarjeta inválido",
+    "expiry": "Formato MM/AA",
+    "cvv": "CVV inválido",
+    "acceptTerms": "Debes aceptar las condiciones"
+  },
   "errors": {
     "dates_unavailable": "Las fechas seleccionadas no están disponibles.",
     "check_in_in_past": "La fecha de entrada no puede ser pasada.",

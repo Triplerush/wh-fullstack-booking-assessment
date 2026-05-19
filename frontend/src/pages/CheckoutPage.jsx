@@ -12,7 +12,7 @@ import { InlineLoginForm } from "../components/forms/InlineLoginForm";
 import { InlineRegisterForm } from "../components/forms/InlineRegisterForm";
 import { TextInput } from "../components/forms/TextInput";
 import { useAuth } from "../context/AuthContext";
-import { mockPaymentSchema } from "../schemas/payment";
+import { createPaymentSchema } from "../schemas/payment";
 import { applyDrfErrorsToForm, getErrorCode } from "../utils/apiErrors";
 import { draftStorage } from "../utils/bookingDraft";
 import { formatCardNumber, formatExpiry } from "../utils/cardMask";
@@ -28,6 +28,10 @@ export function CheckoutPage() {
   const [authMode, setAuthMode] = useState("login");
   const [unavailableOpen, setUnavailableOpen] = useState(false);
 
+  // Reconstruye el schema al cambiar de idioma para que los mensajes Zod
+  // del formulario se traduzcan.
+  const paymentSchema = useMemo(() => createPaymentSchema(t), [t, i18n.language]);
+
   const {
     register,
     handleSubmit,
@@ -35,7 +39,7 @@ export function CheckoutPage() {
     setError,
     setValue,
   } = useForm({
-    resolver: zodResolver(mockPaymentSchema),
+    resolver: zodResolver(paymentSchema),
     defaultValues: {
       card_number: "",
       expiry: "",

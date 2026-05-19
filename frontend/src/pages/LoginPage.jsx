@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslation } from "react-i18next";
@@ -10,18 +10,23 @@ import { TextInput } from "../components/forms/TextInput";
 import { useAuth } from "../context/AuthContext";
 import { applyDrfErrorsToForm } from "../utils/apiErrors";
 
-const loginSchema = z.object({
-  email: z.string().email("Email inválido"),
-  password: z.string().min(1, "Requerido"),
-});
-
 export function LoginPage() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { login } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const next = new URLSearchParams(location.search).get("next") ?? "/";
   const [banner, setBanner] = useState(null);
+
+  // Schema reactivo al idioma.
+  const loginSchema = useMemo(
+    () =>
+      z.object({
+        email: z.string().email(t("validation.email")),
+        password: z.string().min(1, t("validation.required")),
+      }),
+    [t, i18n.language],
+  );
 
   const {
     register,

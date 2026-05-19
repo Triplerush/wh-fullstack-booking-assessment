@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { z } from "zod";
@@ -9,18 +9,23 @@ import { applyDrfErrorsToForm } from "../../utils/apiErrors";
 import { FormError } from "./FormError";
 import { TextInput } from "./TextInput";
 
-const schema = z.object({
-  email: z.string().email("Email inválido"),
-  password: z.string().min(1, "Requerido"),
-});
-
 const FIELDS = ["email", "password"];
 
 export function InlineLoginForm({ onSuccess, onSwitchToRegister }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { login } = useAuth();
   const [banner, setBanner] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
+
+  // Schema reactivo al idioma; useMemo lo reconstruye al cambiar el locale.
+  const schema = useMemo(
+    () =>
+      z.object({
+        email: z.string().email(t("validation.email")),
+        password: z.string().min(1, t("validation.required")),
+      }),
+    [t, i18n.language],
+  );
 
   const {
     register,

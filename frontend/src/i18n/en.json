@@ -103,6 +103,20 @@
     "previous": "Previous",
     "next": "Next"
   },
+  "validation": {
+    "required": "Required",
+    "email": "Invalid email",
+    "passwordMin": "At least 8 characters",
+    "passwordLetter": "Must include a letter",
+    "passwordDigit": "Must include a digit",
+    "phoneCountry": "Format: +34",
+    "phoneNumber": "Digits only (6–15)",
+    "birthDate": "Format YYYY-MM-DD",
+    "cardNumber": "Invalid card number",
+    "expiry": "Format MM/YY",
+    "cvv": "Invalid CVV",
+    "acceptTerms": "You must accept the terms"
+  },
   "errors": {
     "dates_unavailable": "The selected dates aren't available.",
     "check_in_in_past": "Check-in date can't be in the past.",

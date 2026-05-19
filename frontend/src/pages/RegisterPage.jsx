@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslation } from "react-i18next";
@@ -9,24 +9,6 @@ import { FormError } from "../components/forms/FormError";
 import { TextInput } from "../components/forms/TextInput";
 import { useAuth } from "../context/AuthContext";
 import { applyDrfErrorsToForm } from "../utils/apiErrors";
-
-const registerSchema = z.object({
-  email: z.string().email("Email inválido"),
-  password: z
-    .string()
-    .min(8, "Mínimo 8 caracteres")
-    .regex(/[A-Za-z]/, "Debe incluir una letra")
-    .regex(/\d/, "Debe incluir un dígito"),
-  full_name: z.string().min(2, "Requerido"),
-  nationality: z.string().min(2, "Requerido"),
-  phone_country_code: z
-    .string()
-    .regex(/^\+\d{1,4}$/, "Formato: +34"),
-  phone_number: z.string().regex(/^\d{6,15}$/, "Solo dígitos (6–15)"),
-  birth_date: z
-    .string()
-    .regex(/^\d{4}-\d{2}-\d{2}$/, "Formato AAAA-MM-DD"),
-});
 
 const FIELDS = [
   "email",
@@ -39,10 +21,29 @@ const FIELDS = [
 ];
 
 export function RegisterPage() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { register: doRegister } = useAuth();
   const navigate = useNavigate();
   const [banner, setBanner] = useState(null);
+
+  // Schema reactivo al idioma.
+  const registerSchema = useMemo(
+    () =>
+      z.object({
+        email: z.string().email(t("validation.email")),
+        password: z
+          .string()
+          .min(8, t("validation.passwordMin"))
+          .regex(/[A-Za-z]/, t("validation.passwordLetter"))
+          .regex(/\d/, t("validation.passwordDigit")),
+        full_name: z.string().min(2, t("validation.required")),
+        nationality: z.string().min(2, t("validation.required")),
+        phone_country_code: z.string().regex(/^\+\d{1,4}$/, t("validation.phoneCountry")),
+        phone_number: z.string().regex(/^\d{6,15}$/, t("validation.phoneNumber")),
+        birth_date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, t("validation.birthDate")),
+      }),
+    [t, i18n.language],
+  );
 
   const {
     register,
