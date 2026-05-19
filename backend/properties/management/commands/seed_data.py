@@ -13,6 +13,7 @@ from django.db import transaction
 from django.utils.text import slugify
 from PIL import Image, ImageDraw, ImageFont
 
+from bookings.models import Booking
 from properties.models import Amenity, Location, Property, PropertyImage
 
 LOCATIONS = [
@@ -199,7 +200,14 @@ class Command(BaseCommand):
     @transaction.atomic
     def handle(self, *args, **opts):
         if opts["reset"]:
+            # Reinicio total: borramos primero las reservas (FK PROTECT a
+            # Property) y luego el catálogo. Sin --reset el comando solo
+            # añade encima de lo existente.
             self.stdout.write("Resetting catalog tables...")
+            bookings_count = Booking.objects.count()
+            if bookings_count:
+                self.stdout.write(f"  - Deleting {bookings_count} bookings (reset)")
+                Booking.objects.all().delete()
             PropertyImage.objects.all().delete()
             Property.objects.all().delete()
             Amenity.objects.all().delete()

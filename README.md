@@ -72,7 +72,8 @@ defecto). Para cambiarlo crea `frontend/.env.local`.
 # Backend
 cd backend
 .venv/bin/pytest                                 # suite completa
-.venv/bin/python manage.py seed_data --reset --properties 24   # catálogo con fotos temáticas (Unsplash → picsum → placeholder)
+.venv/bin/python manage.py seed_data --reset --properties 24   # reinicio total: borra reservas + catálogo y reseed con fotos (Unsplash → picsum → placeholder)
+.venv/bin/python manage.py seed_data --properties 12           # sin --reset: añade encima de lo existente, sin tocar reservas
 .venv/bin/python manage.py createsuperuser       # admin/staff
 .venv/bin/python manage.py runserver 8000
 
@@ -371,6 +372,8 @@ Postgres ni el backend abren puertos públicos.
 4. **NPM**: nuevo Proxy Host `wind-homes.triplerush.tech` → `wh_frontend:80`
    vía `portfolio-net`, SSL Let's Encrypt activado.
 5. **Seed inicial**: SSH al VPS y `docker compose -f ~/<user>/wind-homes/docker-compose.yml exec backend python manage.py seed_data --reset --properties 12`.
+   - `--reset` reinicia **todo el dataset demo**: borra reservas existentes (FK PROTECT) y luego el catálogo antes de reseedeear. Úsalo para volver al estado de demo limpio (p. ej. tras pruebas QA en prod).
+   - Sin `--reset` solo añade propiedades encima del catálogo actual y no toca reservas — útil si quieres ampliar el catálogo sin perder bookings reales.
 6. **Admin**: tras el primer seed, cambia la contraseña del usuario inicial con
    `docker compose exec backend python manage.py changepassword admin@wh.test`
    (o crea uno nuevo con `createsuperuser` y borra el seedeado).

@@ -12,6 +12,7 @@ import { PropertyDetailPage } from "../pages/PropertyDetailPage";
 import { RegisterPage } from "../pages/RegisterPage";
 import { SearchPage } from "../pages/SearchPage";
 import { RequireAuth } from "./RequireAuth";
+import { ScrollToTop } from "./ScrollToTop";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -35,6 +36,7 @@ export function AppRouter() {
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <AuthProvider>
+          <ScrollToTop />
           <Routes>
             <Route element={<ShellLayout />}>
               <Route path="/" element={<HomePage />} />

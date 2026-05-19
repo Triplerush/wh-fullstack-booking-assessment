@@ -114,6 +114,8 @@
     "birthDate": "Formato AAAA-MM-DD",
     "cardNumber": "Número de tarjeta inválido",
     "expiry": "Formato MM/AA",
+    "expiryMonth": "Mes inválido (01–12)",
+    "expiryPast": "La tarjeta está caducada",
     "cvv": "CVV inválido",
     "acceptTerms": "Debes aceptar las condiciones"
   },

@@ -114,6 +114,8 @@
     "birthDate": "Format YYYY-MM-DD",
     "cardNumber": "Invalid card number",
     "expiry": "Format MM/YY",
+    "expiryMonth": "Invalid month (01–12)",
+    "expiryPast": "Card has expired",
     "cvv": "Invalid CVV",
     "acceptTerms": "You must accept the terms"
   },
