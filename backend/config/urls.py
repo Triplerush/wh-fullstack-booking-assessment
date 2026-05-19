@@ -10,5 +10,7 @@ urlpatterns = [
     path("api/v1/", include("bookings.urls")),
 ]
 
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# Servimos /media tanto en dev como en prod: el nginx del frontend reenvía
+# /media/* al backend, y aquí Django lo entrega desde MEDIA_ROOT (volumen
+# docker en producción). Para tráfico bajo de portafolio es aceptable.
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

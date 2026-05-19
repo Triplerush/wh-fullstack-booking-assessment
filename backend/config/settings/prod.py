@@ -38,6 +38,19 @@ SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 
+# WhiteNoise sirve archivos estáticos (admin de Django + DRF browsable API)
+# desde el contenedor del backend, sin necesidad de volumen compartido con
+# el nginx del frontend.
+MIDDLEWARE = [
+    MIDDLEWARE[0],
+    "whitenoise.middleware.WhiteNoiseMiddleware",
+    *MIDDLEWARE[1:],
+]
+STORAGES = {
+    "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
+    "staticfiles": {"BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage"},
+}
+
 # Proveedor de email: "brevo" (API), "smtp" o "console".
 EMAIL_PROVIDER = os.environ.get("EMAIL_PROVIDER", "brevo").lower()
 

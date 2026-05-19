@@ -5,6 +5,12 @@ Django REST en el backend y React (Vite, JavaScript) en el frontend. Catálogo
 bilingüe (ES/EN), autenticación JWT, reservas con protección anti-doble-booking
 y email de confirmación vía Brevo (HTTPS API).
 
+## Demo en vivo
+
+- **App**: <https://wind-homes.triplerush.tech>
+- **Admin**: <https://wind-homes.triplerush.tech/admin/> · `admin@wh.test` / `admin12345`
+- **API**: <https://wind-homes.triplerush.tech/api/v1/locations/>
+
 ## Arquitectura
 
 ```mermaid
@@ -329,3 +335,37 @@ docker-compose.dev.yml Postgres local
   date-picker custom.
 - El Lighthouse mobile objetivo es ≥85; cualquier degradación se debe
   diagnosticar en `npm run build && npm run preview`.
+
+## Producción
+
+Despliegue en VPS (DigitalOcean) tras Nginx Proxy Manager, en el subdominio
+`wind-homes.triplerush.tech`. Cada push a `main` dispara
+`.github/workflows/deploy.yml`, que:
+
+1. Construye `wh_backend` y `wh_frontend` y los publica en GHCR.
+2. SSH al VPS → `docker compose pull` + `up -d` en `~/<user>/wind-homes/`.
+
+Servicios del compose (`docker-compose.yml` raíz):
+
+| Servicio      | Red(es)                            | Función                                                                                  |
+| ------------- | ---------------------------------- | ---------------------------------------------------------------------------------------- |
+| `wh_postgres` | `wh_internal`                      | Postgres 15 con volumen `wh_pgdata`. Sin puerto público.                                 |
+| `wh_backend`  | `wh_internal`                      | Django + gunicorn. `command: migrate && gunicorn`. WhiteNoise sirve los estáticos del admin. |
+| `wh_frontend` | `wh_internal` + `portfolio-net`    | Nginx con el bundle de Vite. Reenvía `/api`, `/admin`, `/static`, `/media` al backend.   |
+
+NPM en el VPS expone un único Proxy Host
+(`wind-homes.triplerush.tech` → `wh_frontend:80`) con SSL Let's Encrypt; ni
+Postgres ni el backend abren puertos públicos.
+
+### Setup manual (una sola vez)
+
+1. **DNS**: A/CNAME `wind-homes.triplerush.tech` → IP del Droplet.
+2. **GitHub Secrets** del repo:
+   - `VPS_HOST`, `VPS_USERNAME`, `VPS_SSH_KEY` (compartidos con el resto del portfolio).
+   - `DJANGO_SECRET_KEY`, `POSTGRES_PASSWORD`.
+   - `BREVO_API_KEY`, `DEFAULT_FROM_EMAIL` (sender verificado en Brevo).
+3. **Primer deploy**: push a `main`. Esperar pipeline verde.
+4. **NPM**: nuevo Proxy Host `wind-homes.triplerush.tech` → `wh_frontend:80`
+   vía `portfolio-net`, SSL Let's Encrypt activado.
+5. **Seed inicial**: SSH al VPS y `docker compose -f ~/<user>/wind-homes/docker-compose.yml exec backend python manage.py seed_data --reset --properties 12`.
+6. **Admin demo**: usar el que crea el seed (`admin@wh.test` / `admin12345`) o `createsuperuser`.

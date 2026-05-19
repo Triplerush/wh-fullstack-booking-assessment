@@ -1,0 +1,97 @@
+name: Deploy Wind Homes to VPS
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  REGISTRY: ghcr.io
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Lowercase Repository Owner
+        run: echo "REPO_OWNER=$(echo ${{ github.repository_owner }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and Push Backend Image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./backend
+          push: true
+          tags: ${{ env.REGISTRY }}/${{ env.REPO_OWNER }}/wh_backend:latest
+
+      - name: Build and Push Frontend Image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./frontend
+          push: true
+          tags: ${{ env.REGISTRY }}/${{ env.REPO_OWNER }}/wh_frontend:latest
+          build-args: |
+            VITE_API_BASE_URL=/api/v1
+
+      - name: Deploy to VPS via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USERNAME }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            set -e
+            DEPLOY_DIR="/home/${{ secrets.VPS_USERNAME }}/wind-homes"
+            REPO_URL="https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
+
+            mkdir -p "$DEPLOY_DIR"
+
+            # Clon temporal solo para extraer docker-compose.yml.
+            TMPDIR=$(mktemp -d)
+            git clone --depth 1 "$REPO_URL" "$TMPDIR"
+            cp "$TMPDIR/docker-compose.yml" "$DEPLOY_DIR/"
+            rm -rf "$TMPDIR"
+
+            # Login a GHCR para que `docker compose pull` pueda traer imágenes privadas.
+            echo "${{ secrets.GITHUB_TOKEN }}" | docker login ${{ env.REGISTRY }} -u "${{ github.actor }}" --password-stdin
+
+            # .env de producción — nunca se commitea.
+            cat > "$DEPLOY_DIR/.env" <<EOF
+            POSTGRES_DB=wind_homes
+            POSTGRES_USER=wind_homes
+            POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
+            DJANGO_SECRET_KEY=${{ secrets.DJANGO_SECRET_KEY }}
+            ALLOWED_HOSTS=wind-homes.triplerush.tech
+            CORS_ALLOWED_ORIGINS=https://wind-homes.triplerush.tech
+            CSRF_TRUSTED_ORIGINS=https://wind-homes.triplerush.tech
+            SITE_URL=https://wind-homes.triplerush.tech
+            BREVO_API_KEY=${{ secrets.BREVO_API_KEY }}
+            DEFAULT_FROM_EMAIL=${{ secrets.DEFAULT_FROM_EMAIL }}
+            EOF
+
+            # Red compartida con NPM (idempotente; la crea NPM normalmente).
+            docker network create portfolio-net 2>/dev/null || true
+
+            cd "$DEPLOY_DIR"
+
+            # Imágenes inmutables de este deploy.
+            export BACKEND_IMAGE="${{ env.REGISTRY }}/${{ env.REPO_OWNER }}/wh_backend:latest"
+            export FRONTEND_IMAGE="${{ env.REGISTRY }}/${{ env.REPO_OWNER }}/wh_frontend:latest"
+
+            docker compose down --remove-orphans || true
+            docker compose pull
+            docker compose up -d
+
+            # Limpia capas obsoletas para no llenar el disco.
+            docker image prune -a -f
