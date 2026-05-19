@@ -6,13 +6,14 @@ import { useNavigate } from "react-router-dom";
 
 import { createBooking } from "../api/bookings";
 import { BookingSummaryCard } from "../components/booking/BookingSummaryCard";
+import { UnavailableModal } from "../components/booking/UnavailableModal";
 import { FormError } from "../components/forms/FormError";
 import { InlineLoginForm } from "../components/forms/InlineLoginForm";
 import { InlineRegisterForm } from "../components/forms/InlineRegisterForm";
 import { TextInput } from "../components/forms/TextInput";
 import { useAuth } from "../context/AuthContext";
 import { mockPaymentSchema } from "../schemas/payment";
-import { applyDrfErrorsToForm } from "../utils/apiErrors";
+import { applyDrfErrorsToForm, getErrorCode } from "../utils/apiErrors";
 import { draftStorage } from "../utils/bookingDraft";
 import { formatCardNumber, formatExpiry } from "../utils/cardMask";
 
@@ -25,6 +26,7 @@ export function CheckoutPage() {
   const draft = useMemo(() => draftStorage.read(), []);
   const [banner, setBanner] = useState(null);
   const [authMode, setAuthMode] = useState("login");
+  const [unavailableOpen, setUnavailableOpen] = useState(false);
 
   const {
     register,
@@ -78,9 +80,32 @@ export function CheckoutPage() {
       draftStorage.clear();
       navigate(`/booking/${booking.id}/confirmation`, { replace: true });
     } catch (err) {
-      const msg = applyDrfErrorsToForm(err, setError, PAYMENT_FIELDS);
+      // El backend manda el código `dates_unavailable` cuando alguien más
+      // ganó la carrera por las fechas; mostramos un modal bloqueante en
+      // lugar del banner inline para que el usuario no reintente a ciegas.
+      if (getErrorCode(err) === "dates_unavailable") {
+        setUnavailableOpen(true);
+        return;
+      }
+      const msg = applyDrfErrorsToForm(err, setError, PAYMENT_FIELDS, t);
       setBanner(msg ?? t("checkout.genericError"));
     }
+  }
+
+  function handleChooseDates() {
+    setUnavailableOpen(false);
+    // Preservamos el draft para que el usuario solo cambie las fechas.
+    if (draft?.propertySlug) {
+      navigate(`/property/${draft.propertySlug}`);
+    } else {
+      navigate("/search");
+    }
+  }
+
+  function handleBackToSearch() {
+    setUnavailableOpen(false);
+    draftStorage.clear();
+    navigate("/search");
   }
 
   const paymentDisabled = !isAuthenticated;
@@ -185,6 +210,11 @@ export function CheckoutPage() {
         </form>
       </section>
       <BookingSummaryCard draft={draft} />
+      <UnavailableModal
+        open={unavailableOpen}
+        onChooseDates={handleChooseDates}
+        onBackToSearch={handleBackToSearch}
+      />
     </div>
   );
 }

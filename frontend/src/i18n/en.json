@@ -103,6 +103,19 @@
     "previous": "Previous",
     "next": "Next"
   },
+  "errors": {
+    "dates_unavailable": "The selected dates aren't available.",
+    "check_in_in_past": "Check-in date can't be in the past.",
+    "check_out_not_after_check_in": "Check-out must be after check-in.",
+    "guests_must_be_positive": "Number of guests must be greater than zero.",
+    "guests_exceeds_capacity": "This property hosts up to {{value}} guests.",
+    "property_inactive": "Property is unavailable or no longer active.",
+    "email_already_registered": "This email is already registered.",
+    "password_too_short": "Password must be at least 8 characters long.",
+    "password_requires_letter_and_digit": "Password must include at least one letter and one digit.",
+    "invalid_phone_country_code": "Invalid phone country code (format: +34, 1–4 digits).",
+    "invalid_phone_number": "Phone number must be 6–15 digits."
+  },
   "catalog": {
     "night": "night",
     "guests_one": "{{count}} guest",
@@ -153,7 +166,13 @@
     "nights": "Nights",
     "guests": "Guests",
     "total": "Total",
-    "summaryTitle": "Your booking summary"
+    "summaryTitle": "Your booking summary",
+    "unavailable": {
+      "title": "We're sorry",
+      "body": "This property was just booked for those dates. Pick different dates or go back to the search.",
+      "chooseDates": "Pick different dates",
+      "backToSearch": "Back to search"
+    }
   },
   "confirmation": {
     "title": "Booking confirmed!",

@@ -103,6 +103,19 @@
     "previous": "Anterior",
     "next": "Siguiente"
   },
+  "errors": {
+    "dates_unavailable": "Las fechas seleccionadas no están disponibles.",
+    "check_in_in_past": "La fecha de entrada no puede ser pasada.",
+    "check_out_not_after_check_in": "La fecha de salida debe ser posterior a la de entrada.",
+    "guests_must_be_positive": "El número de huéspedes debe ser mayor que cero.",
+    "guests_exceeds_capacity": "La propiedad admite hasta {{value}} huéspedes.",
+    "property_inactive": "La propiedad no existe o no está activa.",
+    "email_already_registered": "Este email ya está registrado.",
+    "password_too_short": "La contraseña debe tener al menos 8 caracteres.",
+    "password_requires_letter_and_digit": "La contraseña debe incluir al menos una letra y un dígito.",
+    "invalid_phone_country_code": "Prefijo telefónico inválido (formato: +34, 1–4 dígitos).",
+    "invalid_phone_number": "El teléfono debe tener entre 6 y 15 dígitos."
+  },
   "catalog": {
     "night": "noche",
     "guests_one": "{{count}} huésped",
@@ -153,7 +166,13 @@
     "nights": "Noches",
     "guests": "Huéspedes",
     "total": "Total",
-    "summaryTitle": "Resumen de tu reserva"
+    "summaryTitle": "Resumen de tu reserva",
+    "unavailable": {
+      "title": "Lo sentimos",
+      "body": "Esta propiedad acaba de ser reservada para esas fechas. Elige otras fechas o vuelve a la búsqueda.",
+      "chooseDates": "Elegir otras fechas",
+      "backToSearch": "Volver a la búsqueda"
+    }
   },
   "confirmation": {
     "title": "¡Reserva confirmada!",

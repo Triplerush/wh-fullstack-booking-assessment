@@ -52,7 +52,7 @@ class RegisterSerializer(serializers.ModelSerializer):
     def validate_email(self, value: str) -> str:
         normalized = value.strip().lower()
         if User.objects.filter(email__iexact=normalized).exists():
-            raise serializers.ValidationError("This email is already registered.")
+            raise serializers.ValidationError("email_already_registered")
         return normalized
 
     def validate_password(self, value: str) -> str:

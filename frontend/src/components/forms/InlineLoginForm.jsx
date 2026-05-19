@@ -35,7 +35,7 @@ export function InlineLoginForm({ onSuccess, onSwitchToRegister }) {
       await login(values.email, values.password);
       onSuccess?.();
     } catch (err) {
-      const msg = applyDrfErrorsToForm(err, setError, FIELDS);
+      const msg = applyDrfErrorsToForm(err, setError, FIELDS, t);
       setBanner(msg ?? t("auth.invalidCredentials"));
     }
   }

@@ -36,7 +36,7 @@ export function LoginPage() {
       await login(values.email, values.password);
       navigate(next, { replace: true });
     } catch (err) {
-      const msg = applyDrfErrorsToForm(err, setError, ["email", "password"]);
+      const msg = applyDrfErrorsToForm(err, setError, ["email", "password"], t);
       setBanner(msg ?? t("auth.invalidCredentials"));
     }
   }

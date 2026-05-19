@@ -48,14 +48,14 @@ def validate_booking_request(prop: Property, *, check_in: date, check_out: date,
     errors = {}
     today = django_timezone.localdate()
     if check_in < today:
-        errors.setdefault("check_in", []).append("La fecha de entrada no puede ser pasada.")
+        errors.setdefault("check_in", []).append("check_in_in_past")
     if check_out <= check_in:
-        errors.setdefault("check_out", []).append("La fecha de salida debe ser posterior a la de entrada.")
+        errors.setdefault("check_out", []).append("check_out_not_after_check_in")
     if guests is None or guests <= 0:
-        errors.setdefault("guests", []).append("El número de huéspedes debe ser mayor que cero.")
+        errors.setdefault("guests", []).append("guests_must_be_positive")
     elif guests > prop.max_guests:
         errors.setdefault("guests", []).append(
-            f"La propiedad admite hasta {prop.max_guests} huéspedes."
+            f"guests_exceeds_capacity:{prop.max_guests}"
         )
 
     if errors:
@@ -63,7 +63,7 @@ def validate_booking_request(prop: Property, *, check_in: date, check_out: date,
 
     if _has_overlap(prop, check_in, check_out):
         raise serializers.ValidationError(
-            {"non_field_errors": ["Las fechas seleccionadas no están disponibles."]}
+            {"non_field_errors": ["dates_unavailable"]}
         )
 
 
@@ -82,12 +82,12 @@ def create_booking(
             prop = Property.objects.select_for_update().get(id=property_id, is_active=True)
         except Property.DoesNotExist as exc:
             raise serializers.ValidationError(
-                {"property_id": ["La propiedad no existe o no está activa."]}
+                {"property_id": ["property_inactive"]}
             ) from exc
 
         if _has_overlap(prop, check_in, check_out, lock=True):
             raise serializers.ValidationError(
-                {"non_field_errors": ["Las fechas seleccionadas no están disponibles."]}
+                {"non_field_errors": ["dates_unavailable"]}
             )
         validate_booking_request(
             prop, check_in=check_in, check_out=check_out, guests=guests
@@ -113,7 +113,7 @@ def create_booking(
             except IntegrityError as exc:
                 if _attempt == 1:
                     raise serializers.ValidationError(
-                        {"non_field_errors": ["Las fechas seleccionadas no están disponibles."]}
+                        {"non_field_errors": ["dates_unavailable"]}
                     ) from exc
                 continue
         raise RuntimeError("unreachable")

@@ -1,10 +1,19 @@
+import { useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
+import { getLocations } from "../../api/catalog";
 import logoUrl from "../../assets/logo.svg";
 
+const FOOTER_DESTINATIONS_LIMIT = 5;
+
 export function Footer() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const { data: locations = [] } = useQuery({
+    queryKey: ["locations", i18n.language],
+    queryFn: getLocations,
+  });
+  const destinations = locations.slice(0, FOOTER_DESTINATIONS_LIMIT);
   return (
     <footer className="footer">
       <div className="footer-inner">
@@ -60,11 +69,11 @@ export function Footer() {
         <div className="footer-columns">
           <div>
             <h3>{t("footer.destinations.title")}</h3>
-            <Link to="/search?location=madrid">Madrid</Link>
-            <Link to="/search?location=barcelona">Barcelona</Link>
-            <Link to="/search?location=valencia">Valencia</Link>
-            <Link to="/search?location=sevilla">Sevilla</Link>
-            <Link to="/search?location=malaga">Málaga</Link>
+            {destinations.map((loc) => (
+              <Link key={loc.slug} to={`/search?location=${loc.slug}`}>
+                {loc.name}
+              </Link>
+            ))}
           </div>
           <div>
             <h3>{t("footer.discover.title")}</h3>

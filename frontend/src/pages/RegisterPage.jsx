@@ -57,7 +57,7 @@ export function RegisterPage() {
       await doRegister(values);
       navigate("/", { replace: true });
     } catch (err) {
-      const msg = applyDrfErrorsToForm(err, setError, FIELDS);
+      const msg = applyDrfErrorsToForm(err, setError, FIELDS, t);
       if (msg) setBanner(msg);
     }
   }

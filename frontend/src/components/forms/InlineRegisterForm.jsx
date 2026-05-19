@@ -51,7 +51,7 @@ export function InlineRegisterForm({ onSuccess }) {
       await doRegister(values);
       onSuccess?.();
     } catch (err) {
-      const msg = applyDrfErrorsToForm(err, setError, FIELDS);
+      const msg = applyDrfErrorsToForm(err, setError, FIELDS, t);
       if (msg) setBanner(msg);
     }
   }
