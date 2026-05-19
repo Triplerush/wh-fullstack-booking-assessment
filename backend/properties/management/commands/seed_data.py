@@ -218,15 +218,30 @@ class Command(BaseCommand):
         ))
 
     def _ensure_admin(self):
+        # Crea un superuser solo si no existe. La contraseña sale de
+        # SEED_ADMIN_PASSWORD (env var); si no está, fija una inutilizable y
+        # avisa para forzar al operador a definirla con `changepassword`.
+        import os
+        import secrets as _secrets
+
         User = get_user_model()
+        email = os.environ.get("SEED_ADMIN_EMAIL", "admin@wh.test")
         admin, created = User.objects.get_or_create(
-            email="admin@wh.test",
-            defaults={"full_name": "Admin Demo", "is_staff": True, "is_superuser": True},
+            email=email,
+            defaults={"full_name": "Admin", "is_staff": True, "is_superuser": True},
         )
         if created:
-            admin.set_password("admin12345")
+            password = os.environ.get("SEED_ADMIN_PASSWORD")
+            if password:
+                admin.set_password(password)
+                self.stdout.write(f"Created admin {email} (password from SEED_ADMIN_PASSWORD)")
+            else:
+                admin.set_password(_secrets.token_urlsafe(32))
+                self.stdout.write(
+                    f"Created admin {email} with random password. "
+                    f"Run `manage.py changepassword {email}` antes de exponerlo."
+                )
             admin.save()
-            self.stdout.write("Created admin user admin@wh.test / admin12345")
 
     def _seed_locations(self):
         out = []

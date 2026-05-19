@@ -41,15 +41,10 @@ services:
       - wh_media:/app/media
     networks:
       - wh_internal
-    # Migra (idempotente) y arranca gunicorn. El CMD del Dockerfile
-    # queda como fallback si alguien corre la imagen sin compose.
-    command: >
-      sh -c "python manage.py migrate --noinput &&
-             gunicorn config.wsgi:application
-             --bind 0.0.0.0:8000
-             --workers 3
-             --access-logfile -
-             --error-logfile -"
+    command:
+      - sh
+      - -c
+      - python manage.py migrate --noinput && gunicorn config.wsgi:application --bind 0.0.0.0:8000 --workers 3 --access-logfile - --error-logfile -
 
   frontend:
     build: ./frontend
@@ -59,14 +54,12 @@ services:
     depends_on:
       - backend
     networks:
-      - wh_internal       # alcanza el backend
-      - portfolio-net     # NPM en el VPS lo alcanza por esta red
+      - wh_internal    
+      - portfolio-net  
 
 networks:
-  # Red privada del subproyecto: solo postgres, backend, frontend hablan aquí.
   wh_internal:
     driver: bridge
-  # Red compartida con NPM (la crea el setup del Droplet, no este compose).
   portfolio-net:
     external: true
 

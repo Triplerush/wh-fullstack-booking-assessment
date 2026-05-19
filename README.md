@@ -8,8 +8,11 @@ y email de confirmación vía Brevo (HTTPS API).
 ## Demo en vivo
 
 - **App**: <https://wind-homes.triplerush.tech>
-- **Admin**: <https://wind-homes.triplerush.tech/admin/> · `admin@wh.test` / `admin12345`
 - **API**: <https://wind-homes.triplerush.tech/api/v1/locations/>
+- **Admin**: <https://wind-homes.triplerush.tech/admin/> · credenciales bajo demanda.
+
+> Para probar el flujo end-to-end no se necesita admin: crea una cuenta desde
+> `/register` o desde el checkout inline en `/checkout`.
 
 ## Arquitectura
 
@@ -368,4 +371,6 @@ Postgres ni el backend abren puertos públicos.
 4. **NPM**: nuevo Proxy Host `wind-homes.triplerush.tech` → `wh_frontend:80`
    vía `portfolio-net`, SSL Let's Encrypt activado.
 5. **Seed inicial**: SSH al VPS y `docker compose -f ~/<user>/wind-homes/docker-compose.yml exec backend python manage.py seed_data --reset --properties 12`.
-6. **Admin demo**: usar el que crea el seed (`admin@wh.test` / `admin12345`) o `createsuperuser`.
+6. **Admin**: tras el primer seed, cambia la contraseña del usuario inicial con
+   `docker compose exec backend python manage.py changepassword admin@wh.test`
+   (o crea uno nuevo con `createsuperuser` y borra el seedeado).
