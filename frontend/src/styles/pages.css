@@ -27,7 +27,8 @@
   font-family: var(--font-display);
   font-size: clamp(40px, 6vw, 80px);
   line-height: 1;
-  letter-spacing: -0.02em;
+  /* Home: títulos con un toque más de tracking, sin pasarse. */
+  letter-spacing: 0.005em;
   word-spacing: 0.02em;
   text-transform: uppercase;
 }
@@ -51,7 +52,8 @@
   margin: 0 0 10px;
   font-family: var(--font-display);
   font-size: 18px;
-  letter-spacing: -0.01em;
+  /* Home: relajado de -0.01em a 0.01em para abrir un poco las letras. */
+  letter-spacing: 0.01em;
   text-transform: uppercase;
 }
 
@@ -417,7 +419,9 @@
   font-family: var(--font-display);
   font-size: clamp(32px, 4vw, 46px);
   line-height: 0.98;
-  letter-spacing: -0.05em;
+  /* Antes -0.05em (muy comprimido). Aflojamos un toque en los titulares
+     del home para que las letras respiren. */
+  letter-spacing: -0.02em;
   text-transform: uppercase;
   font-weight: 900;
 }
@@ -425,7 +429,8 @@
 .display-md {
   font-family: var(--font-display);
   font-size: 26px;
-  letter-spacing: -0.04em;
+  /* Antes -0.04em. Relajado para títulos de la home. */
+  letter-spacing: -0.01em;
   line-height: 1;
   text-transform: uppercase;
   font-weight: 900;
@@ -514,7 +519,9 @@
   font-family: var(--font-display);
   font-size: clamp(48px, 9vw, 100px);
   line-height: 1.2;
-  letter-spacing: -0.01em;
+  /* Home: títulos con un poco más de aire entre letras (sólo titulares,
+     no el texto corrido). */
+  letter-spacing: 0.01em;
   text-transform: uppercase;
   font-weight: 900;
   text-shadow: 0 4px 22px rgba(0, 0, 0, 0.25);
@@ -950,7 +957,8 @@
   font-family: var(--font-display);
   font-size: 42px;
   line-height: 1.05;
-  letter-spacing: -0.01em;
+  /* Home: títulos con un toque más de aire entre letras. */
+  letter-spacing: 0.015em;
   text-transform: uppercase;
   font-weight: 700;
 }
@@ -1102,8 +1110,18 @@
   gap: 42px 22px;
   height: 882px;
   overflow-y: auto;
-  padding-right: 8px;
+  padding-right: 14px;
   scrollbar-gutter: stable;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.45) rgba(0, 0, 0, 0.08);
+  -webkit-mask-image: linear-gradient(to bottom,
+      #000 0%,
+      #000 calc(100% - 40px),
+      rgba(0, 0, 0, 0.35) 100%);
+  mask-image: linear-gradient(to bottom,
+      #000 0%,
+      #000 calc(100% - 40px),
+      rgba(0, 0, 0, 0.35) 100%);
 }
 
 .results-grid .room-card {
@@ -1111,12 +1129,24 @@
 }
 
 .results-grid::-webkit-scrollbar {
-  width: 6px;
+  width: 10px;
+}
+
+.results-grid::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.06);
+  border-radius: 6px;
 }
 
 .results-grid::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.2);
-  border-radius: 3px;
+  background: rgba(0, 0, 0, 0.45);
+  border-radius: 6px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+.results-grid::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.65);
+  background-clip: padding-box;
 }
 
 /* Tarjeta de resultado al patrón real .search-room-item: imagen 380px arriba,
@@ -2390,14 +2420,22 @@
   }
 
   .long-stay {
-    grid-template-columns: 1fr;
+    flex-direction: column;
+    align-items: stretch;
     gap: 32px;
     padding: 56px 24px;
   }
 
   .long-stay-image {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
     max-height: 380px;
     aspect-ratio: 16 / 10;
+  }
+
+  .long-stay-copy {
+    max-width: 100%;
   }
 
   .footer {
@@ -2604,14 +2642,27 @@
   }
 
   .long-stay {
-    grid-template-columns: 1fr;
+    flex-direction: column;
+    align-items: stretch;
     padding: 40px 20px;
     gap: 24px;
   }
 
   .long-stay-image {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
     aspect-ratio: 4 / 3;
     max-height: 300px;
+  }
+
+  .long-stay-copy {
+    max-width: 100%;
+  }
+
+  .long-stay-copy h2 {
+    font-size: 32px;
+    word-wrap: break-word;
   }
 
   .property-grid {

@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslation } from "react-i18next";
@@ -31,9 +31,17 @@ export function LoginPage() {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, isSubmitted },
     setError,
+    clearErrors,
+    trigger,
   } = useForm({ resolver: zodResolver(loginSchema) });
+
+  useEffect(() => {
+    setBanner(null);
+    clearErrors();
+    if (isSubmitted) trigger();
+  }, [i18n.language]);
 
   async function onSubmit(values) {
     setBanner(null);

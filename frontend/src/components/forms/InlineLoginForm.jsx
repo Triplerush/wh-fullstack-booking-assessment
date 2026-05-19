@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { z } from "zod";
@@ -30,9 +30,16 @@ export function InlineLoginForm({ onSuccess, onSwitchToRegister }) {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, isSubmitted },
     setError,
+    clearErrors,
+    trigger,
   } = useForm({ resolver: zodResolver(schema) });
+  useEffect(() => {
+    setBanner(null);
+    clearErrors();
+    if (isSubmitted) trigger();
+  }, [i18n.language]);
 
   async function onSubmit(values) {
     setBanner(null);

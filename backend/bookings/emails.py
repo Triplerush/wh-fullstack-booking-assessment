@@ -47,11 +47,13 @@ def send_booking_confirmation(booking_id: int) -> bool:
     )
     property_image_url = ""
     if cover and cover.image:
-        property_image_url = cover.image.url
-        if property_image_url.startswith("/"):
+        raw_url = cover.image.url
+        if raw_url.startswith(("http://", "https://")):
+            property_image_url = raw_url
+        elif raw_url.startswith("/"):
             base = getattr(settings, "SITE_URL", "").rstrip("/")
-            if base:
-                property_image_url = f"{base}{property_image_url}"
+            if base.startswith(("http://", "https://")):
+                property_image_url = f"{base}{raw_url}"
     context = {
         "booking": booking,
         "user_name": booking.user.full_name or booking.user.email,

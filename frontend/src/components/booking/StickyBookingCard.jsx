@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 import { checkAvailability } from "../../api/properties";
+import { translateErrorList } from "../../utils/apiErrors";
 import { draftStorage } from "../../utils/bookingDraft";
 import { formatPrice } from "../../utils/currency";
 import { FormError } from "../forms/FormError";
@@ -25,6 +26,10 @@ export function StickyBookingCard({ property }) {
   const [banner, setBanner] = useState(null);
   const [pending, setPending] = useState(false);
 
+  useEffect(() => {
+    setBanner(null);
+  }, [i18n.language]);
+
   function update(field) {
     return (e) => {
       setForm((f) => ({ ...f, [field]: e.target.value }));
@@ -39,12 +44,23 @@ export function StickyBookingCard({ property }) {
     setQuote(null);
     setErrors(null);
     setBanner(null);
+    const guestsNum = Number(form.guests);
+    if (
+      Number.isFinite(guestsNum) &&
+      property.max_guests &&
+      guestsNum > property.max_guests
+    ) {
+      setErrors({
+        guests: [`guests_exceeds_capacity:${property.max_guests}`],
+      });
+      return;
+    }
     setPending(true);
     try {
       const result = await checkAvailability(property.slug, {
         check_in: form.check_in,
         check_out: form.check_out,
-        guests: Number(form.guests),
+        guests: guestsNum,
       });
       if (result.available) {
         setQuote(result);
@@ -52,7 +68,7 @@ export function StickyBookingCard({ property }) {
         const fieldErrors = result.errors || {};
         setErrors(fieldErrors);
         if (fieldErrors.non_field_errors?.length) {
-          setBanner(fieldErrors.non_field_errors.join(" "));
+          setBanner(translateErrorList(fieldErrors.non_field_errors, t));
         }
       }
     } catch (_err) {
@@ -108,7 +124,9 @@ export function StickyBookingCard({ property }) {
             onChange={update("check_in")}
           />
           {errors?.check_in?.[0] ? (
-            <p className="field-error">{errors.check_in[0]}</p>
+            <p className="field-error">
+              {translateErrorList(errors.check_in, t)}
+            </p>
           ) : null}
         </div>
 
@@ -122,7 +140,9 @@ export function StickyBookingCard({ property }) {
             onChange={update("check_out")}
           />
           {errors?.check_out?.[0] ? (
-            <p className="field-error">{errors.check_out[0]}</p>
+            <p className="field-error">
+              {translateErrorList(errors.check_out, t)}
+            </p>
           ) : null}
         </div>
 
@@ -137,7 +157,9 @@ export function StickyBookingCard({ property }) {
             onChange={update("guests")}
           />
           {errors?.guests?.[0] ? (
-            <p className="field-error">{errors.guests[0]}</p>
+            <p className="field-error">
+              {translateErrorList(errors.guests, t)}
+            </p>
           ) : null}
         </div>
 

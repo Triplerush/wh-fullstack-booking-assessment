@@ -35,9 +35,11 @@ export function CheckoutPage() {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, isSubmitted },
     setError,
     setValue,
+    clearErrors,
+    trigger,
   } = useForm({
     resolver: zodResolver(paymentSchema),
     defaultValues: {
@@ -48,6 +50,15 @@ export function CheckoutPage() {
       accept_terms: false,
     },
   });
+
+  // Cuando el usuario cambia el idioma, los mensajes ya volcados al formState
+  // (incluido cualquier error del backend ya traducido) se quedan en el
+  // idioma anterior: limpiamos y re-disparamos Zod en el nuevo idioma.
+  useEffect(() => {
+    setBanner(null);
+    clearErrors();
+    if (isSubmitted) trigger();
+  }, [i18n.language]);
 
   function maskedRegister(name, mask) {
     const reg = register(name);

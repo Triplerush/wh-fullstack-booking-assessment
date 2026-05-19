@@ -1,4 +1,4 @@
-function translateError(raw, t) {
+export function translateError(raw, t) {
   const str = String(raw ?? "");
   if (!str) return "";
   const idx = str.indexOf(":");
@@ -7,6 +7,11 @@ function translateError(raw, t) {
   if (!/^[a-z][a-z0-9_]*$/i.test(code)) return str;
   if (!t) return str;
   return t(`errors.${code}`, { value, defaultValue: str });
+}
+
+export function translateErrorList(messages, t) {
+  if (!Array.isArray(messages) || !messages.length) return "";
+  return messages.map((m) => translateError(m, t)).join(" ");
 }
 
 export function applyDrfErrorsToForm(error, setError, fieldNames, t) {
